@@ -1,4 +1,10 @@
+## Step up current project
+```cd src```
+```catkin_create_pkg robot_path_planner rospy std_msgs```
 
+
+
+-------------------------------------------------------------------------------------
 ## Step
 setup linux auto start ros 
     terminal: ```ls -a ~```
