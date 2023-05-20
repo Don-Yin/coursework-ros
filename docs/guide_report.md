@@ -1,3 +1,20 @@
+
+
+
+## Software and RoboticIntegration Final Report
+Please provide a full-length report on ROS path planning software by June 2, 2023at 5pm. This system should comprise the following components:
+
+## Repo
+https://gitlab.com/rsparks/7mri0070
+
+--------------------------------------------------------------------------------------------------------------------
+## System Description
+### Path Planning:
+A implementation to select a straight trajectory from a set of inputs. This algorithm should take in a set of possible entry and target points (represented as a vtkMRMLMarkupsFiducialNode), and two binary image volumes representing the critical structures and target or structure (represented as either a vtkMRMLLabelMapVolumeNode or vtkMRMLLabelVolumeNode). It should return two points representing a selected final trajectory (represented as either a user defined type or a vtkMRMLMarkupsFiducialNode). The final trajectory should be selected with the constraints (a) avoidance of a critical structure, (b) placement of the tool into a target structure, (c) trajectory is below a certain length, (d) maximizing distance from critical structures (as in Coursework 1). Note this algorithm will be tested on the BrainPlanning dataset provided.
+
+
+
+
 ## Report Format
 Introduction (1-2 pages, 16.6% of grade). Describe why integration between imaging processing and robotic simulation is useful in the context of medical applications. Why is using: (a) image processing, (b) robot simulation useful for medical applications. Finally describe the advantages to developing an end-to-end pipeline for a clinical setting. Consider both advantages in implementation (designing the system) and validation (assessing accuracy and robustness).
 
