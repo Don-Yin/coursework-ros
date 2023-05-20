@@ -1,9 +1,20 @@
-## Step up current project
+## Make package
+Note that the package should be inside of the src folder and catkin_make is ran at the root directory.
+```source /opt/ros/noetic/setup.bash```
 ```cd src```
-```catkin_create_pkg robot_path_planner rospy std_msgs```
+```catkin_create_pkg --rosdistro noetic move_robot rospy std_msgs```
+```cd ..``
+```catkin_make```
 
 
+## Setup moveit robot
+```roslaunch moveit_setup_assistant setup_assistant.launch```
 
+after catkin_make:
+```roslaunch robot_config demo.launch``` Note that the robot config is the name of the package defined in moveit
+
+## Run
+```roscore```
 -------------------------------------------------------------------------------------
 ## Step
 setup linux auto start ros 

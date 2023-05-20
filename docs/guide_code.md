@@ -26,6 +26,7 @@ May use moveit package
           Path("data", "BrainParcellation", "cortex.nii.gz"),
       ],
   }
+- We have a new catkin package in the in the src folder, namely src/move_robot, this package folder contains a CMakeLists.txt and a package.xml, both are at the default state.
 
 ## Note
 - Avoid using 3D slicer 
@@ -53,5 +54,5 @@ The above are some descriptions of a path plan and ROS algorithm and an high lev
 
 # Your task
 At the current stage, I want you to focus on this following task, I want you to provide a comprehensive guide for this specific task only:
-1. **Create a ROS Package**: Create a new ROS package to encapsulate your work.
-I want to make this package as a module for my current repository 'src/ros'
+
+2. **Set Up Robot Model in MoveIt**: Import your robot model (URDF file) into MoveIt. MoveIt provides functionalities for robot motion planning, including inverse kinematics, collision detection, and trajectory generation.
