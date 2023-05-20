@@ -1,0 +1,196 @@
+<?xml version="1.0" ?>
+<robot name="improved_robot">
+    <disable_collisions link1="arm1" link2="arm1b" reason="Adjacent" />
+    <disable_collisions link1="arm1b" link2="arm2" reason="Adjacent" />
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="4 4 1" />
+            </geometry>
+        </visual>
+    </link>
+    <link name="rotator1">
+        <visual>
+            <geometry>
+                <cylinder radius="2" length="1" />
+            </geometry>
+        </visual>
+    </link>
+    <link name="pivot1">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 1.57 0" />
+            <geometry>
+                <cylinder radius="1" length="2" />
+            </geometry>
+        </visual>
+    </link>
+    <link name="arm1">
+        <visual>
+            <material name="blue">
+                <color rgba="0 0 1 1" />
+            </material>
+            <origin xyz="0 0 3.75" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="1" length="6" />
+            </geometry>
+        </visual>
+    </link>
+    <link name="pivot1b">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 1.57 0" />
+            <geometry>
+                <cylinder radius="1" length="2" />
+            </geometry>
+        </visual>
+    </link>
+    <link name="arm1b">
+        <visual>
+            <material name="blue">
+                <color rgba="0 0 1 1" />
+            </material>
+            <origin xyz="0 0 3.75" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="1" length="6" />
+            </geometry>
+        </visual>
+    </link>
+    <link name="pivot2">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 1.57 0" />
+            <geometry>
+                <cylinder radius="1" length="2" />
+            </geometry>
+        </visual>
+    </link>
+    <link name="arm2">
+        <visual>
+            <material name="blue">
+                <color rgba="0 0 1 1" />
+            </material>
+            <origin xyz="0 0 4" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="1" length="6" />
+            </geometry>
+        </visual>
+    </link>
+    <link name="end_effector">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <sphere radius="1" />
+            </geometry>
+        </visual>
+    </link>
+    <joint name="base_link_to_rotator1" type="continuous">
+        <origin xyz="0 0 1" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+        <parent link="base_link" />
+        <child link="rotator1" />
+    </joint>
+    <joint name="rotator1_to_pivot1" type="fixed">
+        <origin xyz="0 0 1.5" rpy="0 0 0" />
+        <parent link="rotator1" />
+        <child link="pivot1" />
+    </joint>
+    <joint name="pivot1_to_arm1" type="revolute">
+        <parent link="pivot1" />
+        <child link="arm1" />
+        <axis xyz="1 0 0" />
+        <limit lower="-1.57" upper="1.57" effort="30" velocity="1" />
+    </joint>
+    <joint name="arm1_to_pivot1b" type="continuous">
+        <parent link="arm1" />
+        <child link="pivot1b" />
+        <origin xyz="0 0 7.5" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+    </joint>
+    <joint name="pivot1b_to_arm1b" type="revolute">
+        <parent link="pivot1b" />
+        <child link="arm1b" />
+        <axis xyz="1 0 0" />
+        <limit lower="-1.57" upper="1.57" effort="30" velocity="1" />
+    </joint>
+    <joint name="arm1b_to_pivot2" type="continuous">
+        <parent link="arm1b" />
+        <child link="pivot2" />
+        <origin xyz="0 0 7.5" rpy="0 0 0" />
+        <axis xyz="0 0 1" />
+    </joint>
+    <joint name="pivot2_to_arm2" type="revolute">
+        <parent link="pivot2" />
+        <child link="arm2" />
+        <axis xyz="1 0 0" />
+        <limit lower="-1.57" upper="1.57" effort="30" velocity="1" />
+    </joint>
+    <joint name="arm2_to_end_effector" type="fixed">
+        <origin xyz="0 0 7.5" rpy="0 0 0" />
+        <parent link="arm2" />
+        <child link="end_effector" />
+    </joint>
+    <transmission name="trans_base_link_to_rotator1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="base_link_to_rotator1">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="base_link_to_rotator1_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_pivot1_to_arm1">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="pivot1_to_arm1">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="pivot1_to_arm1_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_arm1_to_pivot1b">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="arm1_to_pivot1b">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="arm1_to_pivot1b_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_pivot1b_to_arm1b">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="pivot1b_to_arm1b">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="pivot1b_to_arm1b_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_arm1b_to_pivot2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="arm1b_to_pivot2">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="arm1b_to_pivot2_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <transmission name="trans_pivot2_to_arm2">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="pivot2_to_arm2">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="pivot2_to_arm2_motor">
+            <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+    </transmission>
+    <gazebo>
+        <plugin name="gazebo_ros_control">
+            <robotNamespace>/</robotNamespace>
+        </plugin>
+    </gazebo>
+</robot>
+

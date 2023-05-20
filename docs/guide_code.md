@@ -54,5 +54,6 @@ The above are some descriptions of a path plan and ROS algorithm and an high lev
 
 # Your task
 At the current stage, I want you to focus on this following task, I want you to provide a comprehensive guide for this specific task only:
+Now I have finished setting up the moveit model, the configuration is stored as src/move_robot_moveit_config. I want you to help me writing the code that implements the inverse kinematics. I want to visually see the robot moving from one point to another
 
-2. **Set Up Robot Model in MoveIt**: Import your robot model (URDF file) into MoveIt. MoveIt provides functionalities for robot motion planning, including inverse kinematics, collision detection, and trajectory generation.
+3. **Implement Inverse Kinematics**: Inverse kinematics is crucial for determining the joint parameters that provide a desired position for the robot's end effector. As part of the MoveIt setup, you would define the kinematics solver for your robot model. MoveIt supports various kinematics solvers like KDL, IKFast, and others. This step is implicit in the setup of MoveIt but is a crucial part of the process, as it enables MoveIt to calculate the robot's joint values to reach the target pose.

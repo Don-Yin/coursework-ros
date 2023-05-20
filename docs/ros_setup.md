@@ -8,10 +8,12 @@ Note that the package should be inside of the src folder and catkin_make is ran 
 
 
 ## Setup moveit robot
+```sudo apt-get install ros-noetic-moveit```
+
 ```roslaunch moveit_setup_assistant setup_assistant.launch```
 
 after catkin_make:
-```roslaunch robot_config demo.launch``` Note that the robot config is the name of the package defined in moveit
+```roslaunch {name of the package} demo.launch``` Note that the robot config is the name of the package defined in moveit
 
 ## Run
 ```roscore```
