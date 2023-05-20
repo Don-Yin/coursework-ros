@@ -1,0 +1,11 @@
+scikit-image~=0.19.3
+plotly
+pydicom
+SimpleITK
+numpy
+vtk
+pandas
+numba
+tqdm
+rich
+supervenn
