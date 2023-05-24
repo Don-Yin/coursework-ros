@@ -11,7 +11,4 @@ rich
 supervenn
 virtualenv
 pyyaml
-
-
-
-sudo apt-get install libffi-dev
+nibabel
