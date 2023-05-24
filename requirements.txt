@@ -12,3 +12,4 @@ supervenn
 virtualenv
 pyyaml
 nibabel
+ros_numpy
