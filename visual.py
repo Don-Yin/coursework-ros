@@ -16,10 +16,9 @@ from sensor_msgs.msg import PointCloud2
 
 rospy.init_node("visualize_node", anonymous=True)
 
-
+group_name = "arms"  # specify your robot group name
 robot = moveit_commander.RobotCommander()
 scene = moveit_commander.PlanningSceneInterface()
-group_name = "arms"  # specify your robot group name
 move_group = moveit_commander.MoveGroupCommander(group_name)
 
 
