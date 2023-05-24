@@ -1,0 +1,3 @@
+<launch>
+    <param name="arm" textfile="assets/arm.urdf"/>
+</launch>

@@ -15,6 +15,8 @@ Note that the package should be inside of the src folder and catkin_make is ran 
 ```roslaunch moveit_setup_assistant setup_assistant.launch```
 
 after catkin_make:
+
+```source devel/setup.sh```
 ```roslaunch move_robot_moveit_config demo.launch``` Note that the robot config is the name of the package defined in moveit
 
 ## Run
