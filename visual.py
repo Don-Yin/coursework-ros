@@ -51,9 +51,9 @@ def load_and_publish_volumes():
             pc_array = np.zeros(
                 len(x),
                 dtype=[
-                    ("x", np.float32),
-                    ("y", np.float32),
-                    ("z", np.float32),
+                    ("x", float),
+                    ("y", float),
+                    ("z", float),
                 ],
             )
             pc_array["x"] = x

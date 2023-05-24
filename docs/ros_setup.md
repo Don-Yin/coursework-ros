@@ -6,6 +6,8 @@ Note that the package should be inside of the src folder and catkin_make is ran 
 ```cd ..``
 ```catkin_make```
 
+```sudo apt-get install ros-noetic-ros-numpy```
+
 
 ## Setup moveit robot
 ```sudo apt-get install ros-noetic-moveit```
