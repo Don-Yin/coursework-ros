@@ -1,8 +1,15 @@
 <?xml version="1.0"?>
 <robot name="improved_robot">
 
-  <disable_collisions link1="arm1" link2="arm1b" reason="Adjacent" />
-  <disable_collisions link1="arm1b" link2="arm2" reason="Adjacent" />
+  <disable_collisions link1="rotator1" link2="pivot1" reason="Adjacent" />
+  <disable_collisions link1="pivot1" link2="arm1" reason="Adjacent" />
+  <disable_collisions link1="arm1" link2="pivot1b" reason="Adjacent" />
+  <disable_collisions link1="pivot1b" link2="arm1b" reason="Adjacent" />
+  <disable_collisions link1="arm1b" link2="pivot2" reason="Adjacent" />
+  <disable_collisions link1="pivot2" link2="arm2" reason="Adjacent" />
+  <disable_collisions link1="arm2" link2="sphere" reason="Adjacent" />
+  <disable_collisions link1="sphere" link2="needle" reason="Adjacent" />
+
 
   <link name="base_link">
     <visual>
