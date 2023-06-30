@@ -242,7 +242,7 @@
   </joint>
 
   <joint name="needle_to_needle_tip" type="fixed">
-    <origin xyz="0 0 1.5" rpy="0 0 0" /> <!-- Modify xyz values for position -->
+    <origin xyz="0 0 2.5" rpy="0 0 0" /> <!-- Modify xyz values for position -->
     <parent link="needle" />
     <child link="needle_tip" />
   </joint>
