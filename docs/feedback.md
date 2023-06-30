@@ -1,3 +1,7 @@
+## Note:
+Feedback of the previous report
+
+## Content:
 Introduction: Very clear detailed and well thought out rationale for the algorithms and data types used. 
 
 Methods no formalisation of the checks is presented (-4pts). Step 6 is doing most of your heavy lifting, it would be clearer if you broke this module down into sub-components and explained in more detail each check and the order it is applied. Similarly, I assume by 'in parallel' you mean you consider the trajectory list in parallel and then each criteria in Step 6 is sequentially applied but this is not explicitly stated. "Content df" appears to be a typo, not sure what df is but it does not appear to be defined. 
