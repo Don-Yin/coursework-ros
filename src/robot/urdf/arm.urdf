@@ -10,6 +10,11 @@
         <box size="4 4 1" />
       </geometry>
     </visual>
+    <collision>
+      <geometry>
+        <box size="4 4 1" />
+      </geometry>
+    </collision>
   </link>
 
   <link name="rotator1">
@@ -18,6 +23,11 @@
         <cylinder radius="2" length="1" />
       </geometry>
     </visual>
+    <collision>
+      <geometry>
+        <cylinder radius="2" length="1" />
+      </geometry>
+    </collision>
   </link>
 
   <link name="pivot1">
@@ -27,6 +37,12 @@
         <cylinder radius="1" length="2" />
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 1.57 0" />
+      <geometry>
+        <cylinder radius="1" length="2" />
+      </geometry>
+    </collision>
   </link>
 
   <link name="arm1">
@@ -39,6 +55,12 @@
         <cylinder radius="1" length="6" />
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="0 0 3.75" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="1" length="6" />
+      </geometry>
+    </collision>
   </link>
 
   <link name="pivot1b">
@@ -48,6 +70,12 @@
         <cylinder radius="1" length="2" />
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 1.57 0" />
+      <geometry>
+        <cylinder radius="1" length="2" />
+      </geometry>
+    </collision>
   </link>
 
   <link name="arm1b">
@@ -60,6 +88,12 @@
         <cylinder radius="1" length="6" />
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="0 0 3.75" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="1" length="6" />
+      </geometry>
+    </collision>
   </link>
 
   <link name="pivot2">
@@ -69,6 +103,12 @@
         <cylinder radius="1" length="2" />
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 1.57 0" />
+      <geometry>
+        <cylinder radius="1" length="2" />
+      </geometry>
+    </collision>
   </link>
 
   <link name="arm2">
@@ -81,6 +121,12 @@
         <cylinder radius="1" length="6" />
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="0 0 4" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="1" length="6" />
+      </geometry>
+    </collision>
   </link>
 
   <link name="sphere">
@@ -90,6 +136,12 @@
         <sphere radius="1" />
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0" />
+      </geometry>
+    </collision>
   </link>
 
   <link name="needle">
@@ -102,6 +154,12 @@
         <cylinder radius="0.05" length="3" />
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="0 0 1" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0.05" length="3" />
+      </geometry>
+    </collision>
   </link>
 
   <joint name="base_link_to_rotator1" type="continuous">
