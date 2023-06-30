@@ -9,7 +9,6 @@ numba
 tqdm
 rich
 supervenn
-virtualenv
 pyyaml
 nibabel
-ros_numpy
+numpy-stl
