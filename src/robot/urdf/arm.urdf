@@ -158,16 +158,32 @@
       </material>
       <origin xyz="0 0 1" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="0.05" length="-3" />
+        <cylinder radius="0.05" length="3" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 1" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="0.05" length="-3" />
+        <cylinder radius="0.05" length="3" />
       </geometry>
     </collision>
   </link>
+
+  <link name="needle_tip">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.01" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0" />
+      </geometry>
+    </collision>
+  </link>
+
 
   <joint name="base_link_to_rotator1" type="continuous">
     <origin xyz="0 0 1" rpy="0 0 0" />
@@ -224,4 +240,11 @@
     <parent link="sphere" />
     <child link="needle" />
   </joint>
+
+  <joint name="needle_to_needle_tip" type="fixed">
+    <origin xyz="0 0 1.5" rpy="0 0 0" /> <!-- Modify xyz values for position -->
+    <parent link="needle" />
+    <child link="needle_tip" />
+  </joint>
+
 </robot>
