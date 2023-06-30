@@ -1,0 +1,2 @@
+
+-DCATKIN_DEVEL_PREFIX=/home/rosbox/coursework-ros/devel -DCMAKE_INSTALL_PREFIX=/home/rosbox/coursework-ros/install -G Unix Makefiles
