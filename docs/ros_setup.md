@@ -1,6 +1,5 @@
 ## Make package
 Note that the package should be inside of the src folder and catkin_make is ran at the root directory.
-```source /opt/ros/noetic/setup.bash```
 ```cd src```
 ```catkin_create_pkg --rosdistro noetic move_robot rospy std_msgs```
 ```cd ..``
@@ -22,16 +21,6 @@ after catkin_make:
 ## Run
 ```roscore```
 -------------------------------------------------------------------------------------
-## Step
-setup linux auto start ros 
-    terminal: ```ls -a ~```
-    terminal: ```nano .bashrc```
-    add at last line: ```source /opt/ros/noetic/setup.bash```
-
-## Step
-This has to be ran at the backend:
-    terminal: ```roscore```
-
 ## Create a workplace env
 [tutorial](http://wiki.ros.org/catkin/Tutorials/create_a_workspace)
 
