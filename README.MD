@@ -15,6 +15,11 @@ All packages should be made inside of the src folder by creating new directories
 while running ros core / chmod +x to make the script itself executable:
 ```rosrun module_name script_name```
 
+# Running launch files in package
+this is a way of running multiple nodes at a same time:
+while running ros core:
+```roslaunch package_name launch_file_name```
+
 # rostopics
 show list:
 ```rostopic list```
