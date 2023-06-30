@@ -8,10 +8,10 @@ Validation should be performed to demonstrate the selected point visually and th
 May use moveit package
 
 ## What we have at the current stage
+- We have the robot model defined using the Unified Robot Description Format at path ```assets/arm.urdf```
 - We have a virtual machine ready that has ROS (ROS1) installed
 - The current repository is in this virtual machine.
-- We have the robot model defined using the Unified Robot Description Format at path Path("assets", "arm.urdf")
-- We have the calculated planed path ready, defined using json file at Path("asserts", "entry_target_real.json"), this file contains a dictionary a key of "original_coordinates" that points to a list where the first element is the entry coordinates (x, y, z) and the second element the target (x, y, z). i.e., entry, target = json_dict["original_coordinates"]
+
 - We have the brain volume data in the format of nii.gz; I want you to visualize three types of volumes while making the algorithm, namely target_structure, critical_structure and cortex. Their file paths are:
 
   files_dict_real = {
@@ -26,8 +26,6 @@ May use moveit package
           Path("data", "BrainParcellation", "cortex.nii.gz"),
       ],
   }
-- We have a new catkin package in the in the src folder, namely src/move_robot, this package folder contains a CMakeLists.txt and a package.xml, both are at the default state.
-- We have a moveit configuration setup at src/move_robot_moveit_config
 
 ## Note
 - Avoid using 3D slicer 

@@ -10,3 +10,13 @@ The work space is created by ```catkin_make``` which makes:
 # Making individual packages
 All packages should be made inside of the src folder by creating new directories using:
 ```catkin_create_pkg package_name dependencies```
+
+# Running individual scripts in package
+while running ros core / chmod +x to make the script itself executable:
+```rosrun module_name script_name```
+
+# rostopics
+show list:
+```rostopic list```
+echo data from a topic:
+```rostopic echo topic_name```
