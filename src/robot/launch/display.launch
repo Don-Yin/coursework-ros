@@ -2,6 +2,7 @@
 
   <arg name="model" default="$(find robot)/urdf/arm.urdf"/>
   <arg name="gui" default="true" />
+  <arg name="rvizconfig" default="$(find robot)/rviz/arm.rviz" />
 
   <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
   <param name="use_gui" value="$(arg gui)"/>
