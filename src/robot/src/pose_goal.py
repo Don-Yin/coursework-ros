@@ -1,50 +1,56 @@
 #!/usr/bin/env python3
 
 import rospy
-import moveit_commander
-import geometry_msgs.msg
-from moveit_commander.conversions import pose_to_list
 import sys
+import moveit_commander
+import moveit_msgs.msg
+import geometry_msgs.msg
+import numpy as np
 
 
-def move_end_effector():
+def move_enc_effector():
     """
     end effector name: end_effector; needle
     end effecor belongs to: needle_group
     end effector parent component: sphere
     """
 
-    # Initialize moveit_commander and rospy.
     moveit_commander.roscpp_initialize(sys.argv)
-    rospy.init_node("move_end_effector", anonymous=True)
+    rospy.init_node("move_effector_node", anonymous=True)
 
-    # Initialize MoveGroupCommander for the 'needle_group'.
-    group = moveit_commander.MoveGroupCommander("needle_group")
+    robot = moveit_commander.RobotCommander()
 
-    # Specify the target pose.
-    pose_target = geometry_msgs.msg.Pose()
-    pose_target.position.x = 0.5
-    pose_target.position.y = 0.5
-    pose_target.position.z = 0.5
+    # Replace with your group name
+    group_name = "needle_group"
+    group = moveit_commander.MoveGroupCommander(group_name)
 
-    # Orientation in quaternion, setting to identity quaternion (no rotation).
-    pose_target.orientation.w = 1.0
+    # Get the current pose
+    current_pose = group.get_current_pose().pose
 
-    # Set the target pose.
-    group.set_pose_target(pose_target)
+    # Generate a random offset within a range of -0.1 to +0.1
+    random_offset = np.random.uniform(-0.1, 0.1, size=3)
 
-    # Plan the trajectory to the target pose.
+    # Apply the offset to the current position
+    target_pose = geometry_msgs.msg.Pose()
+    target_pose.orientation = current_pose.orientation
+    target_pose.position.x = current_pose.position.x + random_offset[0]
+    target_pose.position.y = current_pose.position.y + random_offset[1]
+    target_pose.position.z = current_pose.position.z + random_offset[2]
+
+    group.set_pose_target(target_pose)
+
+    # Plan and move
     plan = group.plan()
+    group.execute(plan, wait=True)
 
-    # Execute the planned trajectory.
-    group.go(wait=True)
-
-    # Clear targets after moving.
+    # Ensure the group stops
+    group.stop()
+    # Clear all targets after movement
     group.clear_pose_targets()
 
 
 if __name__ == "__main__":
     try:
-        move_end_effector()
+        move_enc_effector()
     except rospy.ROSInterruptException:
         pass
