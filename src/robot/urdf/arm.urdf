@@ -41,13 +41,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 1.57 0" />
       <geometry>
-        <cylinder radius="1" length="2" />
+        <cylinder radius="0.5" length="1" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 1.57 0" />
       <geometry>
-        <cylinder radius="1" length="2" />
+        <cylinder radius="0.5" length="1" />
       </geometry>
     </collision>
   </link>
@@ -74,13 +74,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 1.57 0" />
       <geometry>
-        <cylinder radius="1" length="2" />
+        <cylinder radius="0.5" length="1" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 1.57 0" />
       <geometry>
-        <cylinder radius="1" length="2" />
+        <cylinder radius="0.5" length="1" />
       </geometry>
     </collision>
   </link>
@@ -107,13 +107,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 1.57 0" />
       <geometry>
-        <cylinder radius="1" length="2" />
+        <cylinder radius="0.5" length="1" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 1.57 0" />
       <geometry>
-        <cylinder radius="1" length="2" />
+        <cylinder radius="0.5" length="1" />
       </geometry>
     </collision>
   </link>
@@ -123,15 +123,15 @@
       <material name="blue">
         <color rgba="0 0 1 1" />
       </material>
-      <origin xyz="0 0 4" rpy="0 0 0" />
+      <origin xyz="0 0 2.5" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="0.5" length="6" />
+        <cylinder radius="0.5" length="3" />
       </geometry>
     </visual>
     <collision>
-      <origin xyz="0 0 4" rpy="0 0 0" />
+      <origin xyz="0 0 2.5" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="0.5" length="6" />
+        <cylinder radius="0.5" length="3" />
       </geometry>
     </collision>
   </link>
@@ -146,7 +146,7 @@
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <sphere radius="0.5" />
+        <sphere radius="0" />
       </geometry>
     </collision>
   </link>
@@ -164,26 +164,10 @@
     <collision>
       <origin xyz="0 0 1" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="0.05" length="3" />
+        <cylinder radius="0" length="0" />
       </geometry>
     </collision>
   </link>
-
-  <link name="needle_tip">
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <sphere radius="0.1" />
-      </geometry>
-    </visual>
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0" />
-      <geometry>
-        <sphere radius="0.1" />
-      </geometry>
-    </collision>
-  </link>
-
 
   <joint name="base_link_to_rotator1" type="continuous">
     <origin xyz="0 0 1" rpy="0 0 0" />
@@ -230,7 +214,7 @@
     <limit lower="-1.57" upper="1.57" effort="30" velocity="1" />
   </joint>
   <joint name="arm2_to_sphere" type="fixed">
-    <origin xyz="0 0 7.5" rpy="0 0 0" />
+    <origin xyz="0 0 4.5" rpy="0 0 0" />
     <parent link="arm2" />
     <child link="sphere" />
   </joint>
@@ -240,11 +224,4 @@
     <parent link="sphere" />
     <child link="needle" />
   </joint>
-
-  <joint name="needle_to_needle_tip" type="fixed">
-    <origin xyz="0 0 2.5" rpy="0 0 0" /> <!-- Modify xyz values for position -->
-    <parent link="needle" />
-    <child link="needle_tip" />
-  </joint>
-
 </robot>
