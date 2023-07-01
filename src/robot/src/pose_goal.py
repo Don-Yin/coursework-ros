@@ -4,6 +4,7 @@ import rospy
 import moveit_commander
 import geometry_msgs.msg
 from moveit_commander.conversions import pose_to_list
+import sys
 
 
 def move_end_effector():
