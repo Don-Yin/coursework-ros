@@ -161,6 +161,12 @@
         <cylinder radius="0.05" length="3" />
       </geometry>
     </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <cylinder radius="0" length="0" />
+      </geometry>
+    </collision>
   </link>
 
   <joint name="base_link_to_rotator1" type="continuous">
@@ -218,7 +224,7 @@
     <parent link="sphere" />
     <child link="needle" />
     <axis xyz="0 0 1" />
-    <limit lower="0" upper="2" effort="10" velocity="1" />
+    <limit lower="-1" upper="2" effort="10" velocity="1" />
   </joint>
 
 </robot>
