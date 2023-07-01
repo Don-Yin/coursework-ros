@@ -5,39 +5,36 @@ import sys
 import moveit_msgs
 import moveit_commander
 import geometry_msgs
-import numpy as np
-import time
 
 
-def move_end_effector():
-    # initialize the node
+def monitor_end_effector():
+    # initial some node information so ROSCore knows what we are
     moveit_commander.roscpp_initialize(sys.argv)
-    rospy.init_node("move_end_effector", anonymous=True)
+    rospy.init_node("monitor_end_effector", anonymous=True)
 
-    # start MoveIt classes
+    # start some moveit specific classes for the planning -- this is robot specific
     robot = moveit_commander.RobotCommander()
     group_name = "needle_group"
     move_group = moveit_commander.MoveGroupCommander(group_name)
 
-    # specify the end effector
+    # We need to specify the end effector
     move_group.set_end_effector_link("needle")
 
-    # get and print the current end effector position
-    current_pose = move_group.get_current_pose().pose
-    print("Current end effector position:", current_pose)
+    # control the rate of printing
+    rate = rospy.Rate(1)  # 1 Hz
 
-    # start listening and printing every second
+    # main loop, print out the current end effector position every second
     while not rospy.is_shutdown():
         current_pose = move_group.get_current_pose().pose
-        print("Current end effector position:", current_pose)
-        time.sleep(1)
+        print("Current end effector position: ", current_pose)
+        rate.sleep()
 
-    # shutdown MoveIt
+    # shut down moveit_commander
     moveit_commander.roscpp_shutdown()
 
 
 if __name__ == "__main__":
     try:
-        move_end_effector()
+        monitor_end_effector()
     except rospy.ROSInterruptException:
         pass
