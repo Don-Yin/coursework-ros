@@ -14,7 +14,7 @@ def pose_goal():
 
     # start some moveit specific classes for the planning -- this is robot specific
     robot = moveit_commander.RobotCommander()
-    group_name = "AllJoints"
+    group_name = "arm_group"
     move_group = moveit_commander.MoveGroupCommander(group_name)
 
     # set up a pose goal -- right now just hard coded
