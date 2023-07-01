@@ -37,13 +37,18 @@ def pose_goal():
     pose_goal.position.y = rand_y
     pose_goal.position.z = rand_z
 
-    # solve for the pose goal
+    # set the pose goal
     move_group.set_pose_target(pose_goal)
+
+    # plan the motion and execute
     plan = move_group.go(wait=True)
 
-    # clear out and residual information
+    # stop the program from exiting until the motion is finished
     move_group.stop()
     move_group.clear_pose_targets()
+
+    # shut down moveit_commander
+    moveit_commander.roscpp_shutdown()
 
 
 if __name__ == "__main__":
