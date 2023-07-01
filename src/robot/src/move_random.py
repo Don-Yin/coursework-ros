@@ -2,7 +2,6 @@
 
 import rospy
 import sys
-import moveit_msgs
 import moveit_commander
 import geometry_msgs
 
@@ -23,14 +22,17 @@ def move_end_effector():
     # Set random target position
     move_group.set_random_target()
 
-    # plan the motion and execute
-    plan = move_group.go(wait=True)
+    # plan the motion
+    plan = move_group.plan()
 
-    # If the plan fails, alert the user
+    # If the plan fails, alert the user and try again
     while not plan:
         print("Planning failed, trying again")
         move_group.set_random_target()
-        plan = move_group.go(wait=True)
+        plan = move_group.plan()
+
+    # execute the motion
+    move_group.execute(plan, wait=True)
 
     # stop the program from exiting until the motion is finished
     move_group.stop()
