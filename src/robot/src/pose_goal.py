@@ -42,6 +42,10 @@ def move_end_effector():
     # plan the motion and execute
     plan = move_group.go(wait=True)
 
+    while not plan:
+        print("Planning failed, trying again")
+        plan = move_group.go(wait=True)
+
     # stop the program from exiting until the motion is finished
     move_group.stop()
     move_group.clear_pose_targets()
