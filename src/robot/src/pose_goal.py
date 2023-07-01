@@ -5,6 +5,7 @@ import sys
 import moveit_msgs
 import moveit_commander
 import geometry_msgs
+import numpy as np
 
 
 def pose_goal():
@@ -21,19 +22,20 @@ def pose_goal():
     move_group.set_end_effector_link("needle")
 
     # Print out the current end effector position
-    current_pose = move_group.get_current_pose()
-    print("Current end effector position: ", current_pose.pose)
+    current_pose = move_group.get_current_pose().pose
+    print("Current end effector position: ", current_pose)
 
-    aim_x = 208.596 / 100  # 0.208596
-    aim_y = 133.917 / 100  # 0.133917
-    aim_z = 115.449 / 100  # 0.115449
+    # Generate random values for each axis
+    rand_x = current_pose.position.x + np.random.uniform(-0.05, 0.05)
+    rand_y = current_pose.position.y + np.random.uniform(-0.05, 0.05)
+    rand_z = current_pose.position.z + np.random.uniform(-0.05, 0.05)
 
     # set up a pose goal -- right now just hard coded
     pose_goal = geometry_msgs.msg.Pose()
     # pose_goal.orientation.w = 1.0
-    pose_goal.position.x = aim_x
-    pose_goal.position.y = aim_y
-    pose_goal.position.z = aim_z
+    pose_goal.position.x = rand_x
+    pose_goal.position.y = rand_y
+    pose_goal.position.z = rand_z
 
     # solve for the pose goal
     move_group.set_pose_target(pose_goal)
