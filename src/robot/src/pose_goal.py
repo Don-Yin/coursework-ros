@@ -24,6 +24,9 @@ def pose_goal():
     pose_goal.position.y = 133.917
     pose_goal.position.z = 115.449
 
+    # We need to specify the end effector
+    move_group.set_end_effector_link("end_effector")
+
     # solve for the pose goal
     move_group.set_pose_target(pose_goal)
     plan = move_group.go(wait=True)
@@ -38,4 +41,3 @@ if __name__ == "__main__":
         pose_goal()
     except rospy.ROSInterruptException:
         pass
-
