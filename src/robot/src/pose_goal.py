@@ -44,6 +44,20 @@ def move_end_effector():
 
     while not plan:
         print("Planning failed, trying again")
+
+        # Generate random values for each axis
+        rand_x = current_pose.position.x + np.random.uniform(-0.01, 0.01)
+        rand_y = current_pose.position.y + np.random.uniform(-0.01, 0.01)
+        rand_z = current_pose.position.z + np.random.uniform(-0.01, 0.01)
+
+        # set up a pose goal -- right now just hard coded
+        pose_goal = geometry_msgs.msg.Pose()
+        pose_goal.position.x = rand_x
+        pose_goal.position.y = rand_y
+        pose_goal.position.z = rand_z
+
+        # set the pose goal
+        move_group.set_pose_target(pose_goal)
         plan = move_group.go(wait=True)
 
     # stop the program from exiting until the motion is finished
