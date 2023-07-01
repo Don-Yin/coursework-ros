@@ -2,55 +2,56 @@
 
 import rospy
 import sys
+import moveit_msgs
 import moveit_commander
-import moveit_msgs.msg
-import geometry_msgs.msg
+import geometry_msgs
 import numpy as np
 
 
-def move_enc_effector():
-    """
-    end effector name: end_effector; needle
-    end effecor belongs to: needle_group
-    end effector parent component: sphere
-    """
-
+def move_end_effector():
+    # initial some node information so ROSCore knows what we are
     moveit_commander.roscpp_initialize(sys.argv)
-    rospy.init_node("move_effector_node", anonymous=True)
+    rospy.init_node("move_end_effector", anonymous=True)
 
+    # start some moveit specific classes for the planning -- this is robot specific
     robot = moveit_commander.RobotCommander()
-
-    # Replace with your group name
     group_name = "needle_group"
-    group = moveit_commander.MoveGroupCommander(group_name)
+    move_group = moveit_commander.MoveGroupCommander(group_name)
 
-    # Get the current pose
-    current_pose = group.get_current_pose().pose
+    # We need to specify the end effector
+    move_group.set_end_effector_link("needle")
 
-    # Generate a random offset within a range of -0.1 to +0.1
-    random_offset = np.random.uniform(-0.1, 0.1, size=3)
+    # Print out the current end effector position
+    current_pose = move_group.get_current_pose().pose
+    print("Current end effector position: ", current_pose)
 
-    # Apply the offset to the current position
-    target_pose = geometry_msgs.msg.Pose()
-    target_pose.orientation = current_pose.orientation
-    target_pose.position.x = current_pose.position.x + random_offset[0]
-    target_pose.position.y = current_pose.position.y + random_offset[1]
-    target_pose.position.z = current_pose.position.z + random_offset[2]
+    # Generate random values for each axis
+    rand_x = current_pose.position.x + np.random.uniform(-0.01, 0.01)
+    rand_y = current_pose.position.y + np.random.uniform(-0.01, 0.01)
+    rand_z = current_pose.position.z + np.random.uniform(-0.01, 0.01)
 
-    group.set_pose_target(target_pose)
+    # set up a pose goal -- right now just hard coded
+    pose_goal = geometry_msgs.msg.Pose()
+    pose_goal.position.x = rand_x
+    pose_goal.position.y = rand_y
+    pose_goal.position.z = rand_z
 
-    # Plan and move
-    plan = group.plan()
-    group.execute(plan, wait=True)
+    # set the pose goal
+    move_group.set_pose_target(pose_goal)
 
-    # Ensure the group stops
-    group.stop()
-    # Clear all targets after movement
-    group.clear_pose_targets()
+    # plan the motion and execute
+    plan = move_group.go(wait=True)
+
+    # stop the program from exiting until the motion is finished
+    move_group.stop()
+    move_group.clear_pose_targets()
+
+    # shut down moveit_commander
+    moveit_commander.roscpp_shutdown()
 
 
 if __name__ == "__main__":
     try:
-        move_enc_effector()
+        move_end_effector()
     except rospy.ROSInterruptException:
         pass
