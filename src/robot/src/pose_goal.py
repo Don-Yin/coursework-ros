@@ -15,7 +15,7 @@ def pose_goal():
 
     # start some moveit specific classes for the planning -- this is robot specific
     robot = moveit_commander.RobotCommander()
-    group_name = "arm_group"
+    group_name = "needle_group"
     move_group = moveit_commander.MoveGroupCommander(group_name)
 
     # We need to specify the end effector
