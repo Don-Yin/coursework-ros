@@ -7,6 +7,18 @@ import moveit_commander
 import geometry_msgs
 
 
+def print_link_names():
+    # initial some node information so ROSCore knows what we are
+    moveit_commander.roscpp_initialize(sys.argv)
+    rospy.init_node("print_link_names", anonymous=True)
+
+    # start some moveit specific classes for the planning -- this is robot specific
+    robot = moveit_commander.RobotCommander()
+
+    # print all the link names
+    print("Links in the robot model: ", robot.get_link_names())
+
+
 def pose_goal():
     # initial some node information so ROSCore knows what we are
     moveit_commander.roscpp_initialize(sys.argv)
@@ -42,6 +54,7 @@ def pose_goal():
 
 if __name__ == "__main__":
     try:
+        print_link_names()
         pose_goal()
     except rospy.ROSInterruptException:
         pass
