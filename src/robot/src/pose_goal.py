@@ -42,7 +42,6 @@ def pose_goal():
 
 if __name__ == "__main__":
     try:
-        print_link_names()
         pose_goal()
     except rospy.ROSInterruptException:
         pass
