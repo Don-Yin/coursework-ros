@@ -17,13 +17,6 @@ def pose_goal():
     group_name = "needle_group"
     move_group = moveit_commander.MoveGroupCommander(group_name)
 
-    # set up a pose goal -- right now just hard coded
-    pose_goal = geometry_msgs.msg.Pose()
-    pose_goal.orientation.w = 1.0
-    pose_goal.position.x = 208.596
-    pose_goal.position.y = 133.917
-    pose_goal.position.z = 115.449
-
     # We need to specify the end effector
     move_group.set_end_effector_link("end_effector")
 
@@ -31,13 +24,20 @@ def pose_goal():
     current_pose = move_group.get_current_pose()
     print("Current end effector position: ", current_pose.pose)
 
-    # solve for the pose goal
-    move_group.set_pose_target(pose_goal)
-    plan = move_group.go(wait=True)
+    # # set up a pose goal -- right now just hard coded
+    # pose_goal = geometry_msgs.msg.Pose()
+    # pose_goal.orientation.w = 1.0
+    # pose_goal.position.x = 208.596
+    # pose_goal.position.y = 133.917
+    # pose_goal.position.z = 115.449
+
+    # # solve for the pose goal
+    # move_group.set_pose_target(pose_goal)
+    # plan = move_group.go(wait=True)
 
     # clear out and residual information
-    move_group.stop()
-    move_group.clear_pose_targets()
+    # move_group.stop()
+    # move_group.clear_pose_targets()
 
 
 if __name__ == "__main__":
