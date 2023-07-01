@@ -24,20 +24,24 @@ def pose_goal():
     current_pose = move_group.get_current_pose()
     print("Current end effector position: ", current_pose.pose)
 
-    # # set up a pose goal -- right now just hard coded
-    # pose_goal = geometry_msgs.msg.Pose()
-    # pose_goal.orientation.w = 1.0
-    # pose_goal.position.x = 208.596
-    # pose_goal.position.y = 133.917
-    # pose_goal.position.z = 115.449
+    aim_x = 208.596 / 1000  # 0.208596
+    aim_y = 133.917 / 1000  # 0.133917
+    aim_z = 115.449 / 1000  # 0.115449
 
-    # # solve for the pose goal
-    # move_group.set_pose_target(pose_goal)
-    # plan = move_group.go(wait=True)
+    # set up a pose goal -- right now just hard coded
+    pose_goal = geometry_msgs.msg.Pose()
+    # pose_goal.orientation.w = 1.0
+    pose_goal.position.x = aim_x
+    pose_goal.position.y = aim_y
+    pose_goal.position.z = aim_z
+
+    # solve for the pose goal
+    move_group.set_pose_target(pose_goal)
+    plan = move_group.go(wait=True)
 
     # clear out and residual information
-    # move_group.stop()
-    # move_group.clear_pose_targets()
+    move_group.stop()
+    move_group.clear_pose_targets()
 
 
 if __name__ == "__main__":
