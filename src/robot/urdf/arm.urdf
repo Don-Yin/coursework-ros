@@ -59,13 +59,13 @@
       </material>
       <origin xyz="0 0 3.75" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="1" length="6" />
+        <cylinder radius="0.5" length="5.5" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 3.75" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="1" length="6" />
+        <cylinder radius="0.5" length="5.5" />
       </geometry>
     </collision>
   </link>
@@ -92,13 +92,13 @@
       </material>
       <origin xyz="0 0 3.75" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="1" length="6" />
+        <cylinder radius="0.5" length="5.5" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 3.75" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="1" length="6" />
+        <cylinder radius="0.5" length="5.5" />
       </geometry>
     </collision>
   </link>
@@ -125,13 +125,13 @@
       </material>
       <origin xyz="0 0 4" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="1" length="6" />
+        <cylinder radius="0.5" length="6" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 4" rpy="0 0 0" />
       <geometry>
-        <cylinder radius="1" length="6" />
+        <cylinder radius="0.5" length="6" />
       </geometry>
     </collision>
   </link>
@@ -140,13 +140,13 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <sphere radius="1" />
+        <sphere radius="0.5" />
       </geometry>
     </visual>
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <sphere radius="0" />
+        <sphere radius="0.5" />
       </geometry>
     </collision>
   </link>
