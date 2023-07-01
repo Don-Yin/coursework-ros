@@ -30,12 +30,23 @@ def pose_goal():
     rand_y = current_pose.position.y + np.random.uniform(-0.05, 0.05)
     rand_z = current_pose.position.z + np.random.uniform(-0.05, 0.05)
 
+    # randomize the orientation based on the current orientation
+    rand_orientation = current_pose.orientation
+    rand_orientation.x = current_pose.orientation.x + np.random.uniform(-0.05, 0.05)
+    rand_orientation.y = current_pose.orientation.y + np.random.uniform(-0.05, 0.05)
+    rand_orientation.z = current_pose.orientation.z + np.random.uniform(-0.05, 0.05)
+    rand_orientation.w = current_pose.orientation.w + np.random.uniform(-0.05, 0.05)
+
     # set up a pose goal -- right now just hard coded
     pose_goal = geometry_msgs.msg.Pose()
-    # pose_goal.orientation.w = 1.0
     pose_goal.position.x = rand_x
     pose_goal.position.y = rand_y
     pose_goal.position.z = rand_z
+
+    pose_goal.orientation.x = rand_orientation.x
+    pose_goal.orientation.y = rand_orientation.y
+    pose_goal.orientation.z = rand_orientation.z
+    pose_goal.orientation.w = rand_orientation.w
 
     # set the pose goal
     move_group.set_pose_target(pose_goal)
