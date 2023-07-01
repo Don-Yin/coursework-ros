@@ -7,18 +7,6 @@ import moveit_commander
 import geometry_msgs
 
 
-def print_link_names():
-    # initial some node information so ROSCore knows what we are
-    moveit_commander.roscpp_initialize(sys.argv)
-    rospy.init_node("print_link_names", anonymous=True)
-
-    # start some moveit specific classes for the planning -- this is robot specific
-    robot = moveit_commander.RobotCommander()
-
-    # print all the link names
-    print("Links in the robot model: ", robot.get_link_names())
-
-
 def pose_goal():
     # initial some node information so ROSCore knows what we are
     moveit_commander.roscpp_initialize(sys.argv)
@@ -30,7 +18,7 @@ def pose_goal():
     move_group = moveit_commander.MoveGroupCommander(group_name)
 
     # We need to specify the end effector
-    move_group.set_end_effector_link("end_effector")
+    move_group.set_end_effector_link("needle")
 
     # Print out the current end effector position
     current_pose = move_group.get_current_pose()
