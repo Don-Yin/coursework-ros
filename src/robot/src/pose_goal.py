@@ -27,6 +27,10 @@ def pose_goal():
     # We need to specify the end effector
     move_group.set_end_effector_link("end_effector")
 
+    # Print out the current end effector position
+    current_pose = move_group.get_current_pose()
+    print("Current end effector position: ", current_pose.pose)
+
     # solve for the pose goal
     move_group.set_pose_target(pose_goal)
     plan = move_group.go(wait=True)
