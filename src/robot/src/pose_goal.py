@@ -24,9 +24,9 @@ def pose_goal():
     current_pose = move_group.get_current_pose()
     print("Current end effector position: ", current_pose.pose)
 
-    aim_x = 208.596 / 1000  # 0.208596
-    aim_y = 133.917 / 1000  # 0.133917
-    aim_z = 115.449 / 1000  # 0.115449
+    aim_x = 208.596 / 10  # 0.208596
+    aim_y = 133.917 / 10  # 0.133917
+    aim_z = 115.449 / 10  # 0.115449
 
     # set up a pose goal -- right now just hard coded
     pose_goal = geometry_msgs.msg.Pose()
