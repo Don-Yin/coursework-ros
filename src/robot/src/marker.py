@@ -14,7 +14,7 @@ from fcsv import FcsvParser
 
 
 def create_marker(color, namespace, frame_id, points):
-    size_scale = 0.3
+    size_scale = 0.4
     marker = Marker()
     marker.header.frame_id = frame_id
     marker.ns = namespace
@@ -38,7 +38,7 @@ def main():
     publisher = rospy.Publisher("visualization_marker", Marker, queue_size=10)
     rospy.sleep(1)
 
-    scale_factor = 0.075
+    scale_factor = 0.05
     entires_fcsv = FcsvParser(Path("data", "entries.fcsv"))
     targets_fcsv = FcsvParser(Path("data", "targets.fcsv"))
 
