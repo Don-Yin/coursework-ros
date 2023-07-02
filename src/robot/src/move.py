@@ -118,7 +118,7 @@ class CommandArm:
 
         move_group.set_pose_target(pose_target)
 
-        max_attempts = 10
+        max_attempts = 5
         num_attempts = 0
         plan_success = False
 
