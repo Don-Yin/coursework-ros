@@ -206,8 +206,8 @@ if __name__ == "__main__":
         # command_arm.pose_needle("Retracted")
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
-        # command_arm.end_effector_positon(entry)
-        command_arm.end_effector_position_orientation(entry, target)
+        command_arm.end_effector_positon(entry)
+        # command_arm.end_effector_position_orientation(entry, target)
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
