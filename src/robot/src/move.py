@@ -107,7 +107,7 @@ if __name__ == "__main__":
         # command_arm.pose_arm("Home")
         # command_arm.pose_needle("Retracted")
         # command_arm.pose_needle("Extended")
-        command_arm.move_end_effector((10, 10, 10))
+        command_arm.move_end_effector((10, 10, 10), (0, 0, 0, 1))
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
