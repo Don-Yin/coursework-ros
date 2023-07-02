@@ -12,20 +12,19 @@ class CommandArm:
         rospy.init_node("move_end_effector", anonymous=True)
 
     def move_end_effector(self, coordinates: tuple, orientations: tuple = None):
-        if not self.check_reachability(coordinates):
-            print("Position is not reachable")
-            return
-
         robot = moveit_commander.RobotCommander()
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("needle")
 
         # Set the planning time to a higher value
-        move_group.set_planning_time(30)
+        move_group.set_planning_time(10)
+
+        # Use a different planner
+        move_group.set_planner_id("RRTConnectkConfigDefault")
 
         pose_goal = geometry_msgs.msg.PoseStamped()
-        pose_goal.header.frame_id = "base_link"  # Here you set the frame_id
+        pose_goal.header.frame_id = "base_link"
         pose_goal.pose.position.x = coordinates[0]
         pose_goal.pose.position.y = coordinates[1]
         pose_goal.pose.position.z = coordinates[2]
@@ -71,23 +70,6 @@ class CommandArm:
 
         move_group.stop()
         move_group.clear_pose_targets()
-
-    def check_reachability(self, coordinates: tuple):
-        group_name = "arm_group"
-        move_group = moveit_commander.MoveGroupCommander(group_name)
-
-        pose_target = geometry_msgs.msg.PoseStamped()
-        pose_target.header.frame_id = "base_link"
-        pose_target.pose.position.x = coordinates[0]
-        pose_target.pose.position.y = coordinates[1]
-        pose_target.pose.position.z = coordinates[2]
-
-        # Try to solve IK for the target pose
-        joint_values = move_group.get_joint_value_target(pose_target)
-        if joint_values is not None:
-            return True  # Position is reachable
-        else:
-            return False  # Position is not reachable
 
     def pose_needle(self, pose: str):
         robot = moveit_commander.RobotCommander()
