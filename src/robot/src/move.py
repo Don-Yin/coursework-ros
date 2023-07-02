@@ -146,8 +146,8 @@ if __name__ == "__main__":
     entry = tuple([(i * scale_factor).__round__(2) for i in entry])
     target = tuple([(i * scale_factor).__round__(2) for i in target])
 
-    entry = [convert_slicer_to_ros(p) for p in entry]
-    target = [convert_slicer_to_ros(p) for p in target]
+    entry = convert_slicer_to_ros(entry)
+    target = convert_slicer_to_ros(target)
 
     try:
         command_arm = CommandArm()
