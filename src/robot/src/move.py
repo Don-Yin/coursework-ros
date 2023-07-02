@@ -161,7 +161,7 @@ if __name__ == "__main__":
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
         command_arm.end_effector_positon(entry)
-        command_arm.rotate_end_effector(np.radians(45), np.radians(45), np.radians(45))
+        command_arm.rotate_end_effector(np.radians(2), np.radians(2), np.radians(2))
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
