@@ -20,9 +20,9 @@ def create_marker(color, namespace, frame_id, points):
     marker.id = 0
     marker.type = Marker.SPHERE_LIST
     marker.action = Marker.ADD
-    marker.scale.x = 0.01  # Adjust as necessary
-    marker.scale.y = 0.01  # Adjust as necessary
-    marker.scale.z = 0.01  # Adjust as necessary
+    marker.scale.x = 0.1  # Adjust as necessary
+    marker.scale.y = 0.1  # Adjust as necessary
+    marker.scale.z = 0.1  # Adjust as necessary
     marker.color = color
     marker.pose.orientation.w = 1.0
     for point in points:
