@@ -6,6 +6,7 @@ import sys
 import rospy
 from visualization_msgs.msg import Marker
 from std_msgs.msg import ColorRGBA
+import geometry_msgs.msg
 import numpy as np
 
 sys.path.insert(0, "src/modules")
