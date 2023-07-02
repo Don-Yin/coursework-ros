@@ -14,16 +14,16 @@ from fcsv import FcsvParser
 
 
 def create_marker(color, namespace, frame_id, points):
-    scale = 1
+    size_scale = 0.3
     marker = Marker()
     marker.header.frame_id = frame_id
     marker.ns = namespace
     marker.id = 0
     marker.type = Marker.SPHERE_LIST
     marker.action = Marker.ADD
-    marker.scale.x = scale  # Adjust as necessary
-    marker.scale.y = scale  # Adjust as necessary
-    marker.scale.z = scale  # Adjust as necessary
+    marker.scale.x = size_scale  # Adjust as necessary
+    marker.scale.y = size_scale  # Adjust as necessary
+    marker.scale.z = size_scale  # Adjust as necessary
     marker.color = color
     marker.pose.orientation.w = 1.0
     for point in points:
@@ -38,7 +38,7 @@ def main():
     publisher = rospy.Publisher("visualization_marker", Marker, queue_size=10)
     rospy.sleep(1)
 
-    scale_factor = 0.1
+    scale_factor = 0.05
     entires_fcsv = FcsvParser(Path("data", "entries.fcsv"))
     targets_fcsv = FcsvParser(Path("data", "targets.fcsv"))
 
