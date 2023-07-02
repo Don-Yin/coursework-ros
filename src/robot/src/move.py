@@ -22,6 +22,8 @@ class CommandArm:
         self.robot = moveit_commander.RobotCommander()
 
     def end_effector_positon(self, coordinates: tuple):
+        print(coordinates)
+
         """orientation is not considered"""
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
@@ -41,6 +43,8 @@ class CommandArm:
         move_group.clear_pose_targets()
 
     def end_effector_pose(self, coordinates: tuple, orientations: tuple = None):
+        print(coordinates)
+
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("needle")
@@ -133,8 +137,8 @@ if __name__ == "__main__":
 
     print(entry, target)
 
-    entry = [i * 0.075 for i in entry]
-    target = [i * 0.075 for i in target]
+    entry = tuple([i * 0.075 for i in entry])
+    target = tuple([i * 0.075 for i in target])
 
     try:
         command_arm = CommandArm()
