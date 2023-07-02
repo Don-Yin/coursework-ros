@@ -130,6 +130,8 @@ if __name__ == "__main__":
     import json
     from pathlib import Path
 
+    scale_factor = 0.05
+
     with open(Path("assets", "entry_target_real.json"), "r") as loader:
         data = json.load(loader)
 
@@ -137,8 +139,8 @@ if __name__ == "__main__":
 
     print(entry, target)
 
-    entry = tuple([(i * 0.075).__round__(2) for i in entry])
-    target = tuple([(i * 0.075).__round__(2) for i in target])
+    entry = tuple([(i * scale_factor).__round__(2) for i in entry])
+    target = tuple([(i * scale_factor).__round__(2) for i in target])
 
     try:
         command_arm = CommandArm()
