@@ -123,7 +123,7 @@ class CommandArm:
         max_attempts = 3
         num_attempts = 0
         plan_success = False
-        move_group.set_planning_time(30)
+        move_group.set_planning_time(120)
 
         while not plan_success and num_attempts < max_attempts:
             print("Planning attempt: ", num_attempts)
