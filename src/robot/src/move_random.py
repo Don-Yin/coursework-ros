@@ -12,7 +12,7 @@ def move_end_effector():
 
     # start some moveit specific classes for the planning -- this is robot specific
     robot = moveit_commander.RobotCommander()
-    group_name = "needle_group"
+    group_name = "arm_group"
     move_group = moveit_commander.MoveGroupCommander(group_name)
 
     # We need to specify the end effector
