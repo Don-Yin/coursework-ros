@@ -83,7 +83,7 @@ class CommandArm:
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
-        move_group.set_planner_id("PRMstar")
+        # move_group.set_planner_id("PRMstar")
         move_group.set_max_velocity_scaling_factor(1.0)
         move_group.set_max_acceleration_scaling_factor(1.0)
 
@@ -128,8 +128,6 @@ class CommandArm:
             print("Planning attempt: ", num_attempts)
             plan_success = move_group.go(wait=True)
             num_attempts += 1
-
-        # plan_success = move_group.go(wait=True)
 
         if not plan_success:
             print("Planning failed, trying again")
