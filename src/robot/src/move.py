@@ -15,7 +15,7 @@ class CommandArm:
         robot = moveit_commander.RobotCommander()
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
-        move_group.set_end_effector_link("needle")
+        move_group.set_end_effector_link("sphere")
 
         # Set the planning time to a higher value
         move_group.set_planning_time(30)
