@@ -66,7 +66,7 @@ class CommandArm:
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
-        move_group.set_planner_id("RRTConnect")
+        # move_group.set_planner_id("RRTConnect")
 
         # Calculate the direction vector from entry to target
         direction = target - entry
