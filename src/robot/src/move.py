@@ -177,6 +177,8 @@ class CommandArm:
         robot = moveit_commander.RobotCommander()
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
+        move_group.set_max_velocity_scaling_factor(1.0)
+        move_group.set_max_acceleration_scaling_factor(1.0)
 
         move_group.set_named_target(pose)
         plan_success = move_group.go(wait=True)
@@ -209,7 +211,7 @@ if __name__ == "__main__":
     try:
         command_arm = CommandArm()
         # command_arm.move_random()
-        # command_arm.pose_arm("Home")
+        command_arm.pose_arm("Home")
         # command_arm.pose_needle("Retracted")
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
