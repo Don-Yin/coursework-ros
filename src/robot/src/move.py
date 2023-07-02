@@ -11,6 +11,38 @@ class CommandArm:
         moveit_commander.roscpp_initialize(sys.argv)
         rospy.init_node("move_end_effector", anonymous=True)
 
+    def move_end_effector(self, coordinates: tuple, orientations: tuple = None):
+        robot = moveit_commander.RobotCommander()
+        group_name = "arm_group"
+        move_group = moveit_commander.MoveGroupCommander(group_name)
+        move_group.set_end_effector_link("needle")
+
+        # Set the planning time to a higher value
+        move_group.set_planning_time(10)
+
+        pose_goal = geometry_msgs.msg.PoseStamped()  # Use PoseStamped instead of Pose
+        pose_goal.header.frame_id = "base_link"  # Here you set the frame_id
+        pose_goal.pose.position.x = coordinates[0]
+        pose_goal.pose.position.y = coordinates[1]
+        pose_goal.pose.position.z = coordinates[2]
+
+        if orientations is not None:
+            pose_goal.pose.orientation.x = orientations[0]
+            pose_goal.pose.orientation.y = orientations[1]
+            pose_goal.pose.orientation.z = orientations[2]
+            pose_goal.pose.orientation.w = orientations[3]
+
+        move_group.set_pose_target(pose_goal)
+        plan = move_group.go(wait=True)
+
+        while not plan:
+            print("Planning failed, trying again")
+            move_group.set_pose_target(pose_goal)
+            plan = move_group.go(wait=True)
+
+        move_group.stop()
+        move_group.clear_pose_targets()
+
     def move_random(self):
         """
         The robot variable can be used for:
@@ -64,44 +96,6 @@ class CommandArm:
             print("Planning failed, trying again")
             move_group.set_named_target(pose)
             plan_success = move_group.go(wait=True)
-
-        move_group.stop()
-        move_group.clear_pose_targets()
-
-    def move_end_effector(self, coordinates: tuple, orientations: tuple = None):
-        robot = moveit_commander.RobotCommander()
-        group_name = "arm_group"
-        move_group = moveit_commander.MoveGroupCommander(group_name)
-        move_group.set_end_effector_link("needle")
-
-        # Set the planning time to a higher value
-        move_group.set_planning_time(10)
-
-        if orientations is None:
-            # Only set position target
-            move_group.set_position_target(coordinates)
-        else:
-            pose_goal = geometry_msgs.msg.Pose()
-            pose_goal.position.x = coordinates[0]
-            pose_goal.position.y = coordinates[1]
-            pose_goal.position.z = coordinates[2]
-            pose_goal.orientation.x = orientations[0]
-            pose_goal.orientation.y = orientations[1]
-            pose_goal.orientation.z = orientations[2]
-            pose_goal.orientation.w = orientations[3]
-
-            move_group.set_pose_target(pose_goal)
-
-        plan = move_group.go(wait=True)
-
-        while not plan:
-            print("Planning failed, trying again")
-            if orientations is None:
-                move_group.set_position_target(coordinates)
-            else:
-                move_group.set_pose_target(pose_goal)
-
-            plan = move_group.go(wait=True)
 
         move_group.stop()
         move_group.clear_pose_targets()
