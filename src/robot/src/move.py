@@ -5,7 +5,7 @@ import sys
 import moveit_commander
 import geometry_msgs
 import numpy as np
-from tf.transformations import quaternion_from_euler, quaternion_from_matrix
+from tf.transformations import quaternion_from_euler
 
 
 def convert_slicer_to_ros(point):
@@ -50,50 +50,38 @@ class CommandArm:
         move_group.stop()
         move_group.clear_pose_targets()
 
-    def end_effector_position_orientation(self, entry: np.array, target: np.array):
+    def rotate_end_effector(self, roll, pitch, yaw):
+        """Rotate the end effector to desired euler angles while maintaining position"""
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
 
-        # Calculate the direction vector from entry to target
-        direction = target - entry
-        direction = direction / np.linalg.norm(
-            direction
-        )  # Normalize to get unit vector
+        # Get the current position
+        current_pose = move_group.get_current_pose().pose.position
+        x, y, z = current_pose.x, current_pose.y, current_pose.z
 
-        # Assuming the 'up' direction is along z-axis of the robot base frame
-        up = np.array([0, 0, 1])
+        # Convert euler angles (roll, pitch, yaw) to quaternion
+        q = quaternion_from_euler(roll, pitch, yaw)
 
-        # Calculate the right vector as the cross product of direction and up
-        right = np.cross(direction, up)
-
-        # Recalculate the up vector as the cross product of right and direction
-        up = np.cross(right, direction)
-
-        # Construct rotation matrix
-        rotation_matrix = np.array([right, up, direction])
-
-        # Convert the rotation matrix to a quaternion
-        quaternion = quaternion_from_matrix(rotation_matrix)
-
-        # Set the pose target
+        # Prepare the target pose
         pose_target = geometry_msgs.msg.Pose()
-        pose_target.position.x = entry[0]
-        pose_target.position.y = entry[1]
-        pose_target.position.z = entry[2]
-        pose_target.orientation.x = quaternion[0]
-        pose_target.orientation.y = quaternion[1]
-        pose_target.orientation.z = quaternion[2]
-        pose_target.orientation.w = quaternion[3]
-        move_group.set_pose_target(pose_target)
+        pose_target.position.x = x
+        pose_target.position.y = y
+        pose_target.position.z = z
+        pose_target.orientation.x = q[0]
+        pose_target.orientation.y = q[1]
+        pose_target.orientation.z = q[2]
+        pose_target.orientation.w = q[3]
 
-        # Planning and executing the motion
+        # Set the target pose
+        move_group.set_pose_target(pose_target)
         plan_success = move_group.go(wait=True)
 
-        while not plan_success:
-            print("Planning failed, trying again")
-            move_group.set_pose_target(pose_target)
-            plan_success = move_group.go(wait=True)
+        # while not plan_success:
+        if not plan_success:
+            print("Planning failed")
+            move_group.stop()
+            move_group.clear_pose_targets()
 
         move_group.stop()
         move_group.clear_pose_targets()
@@ -172,8 +160,8 @@ if __name__ == "__main__":
         # command_arm.pose_needle("Retracted")
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
-        # command_arm.end_effector_positon(entry)
-        command_arm.end_effector_position_orientation(entry, target)
+        command_arm.end_effector_positon(entry)
+        command_arm.rotate_end_effector(np.radians(45), np.radians(45), np.radians(45))
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
