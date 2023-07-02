@@ -73,12 +73,11 @@ class CommandArm:
 
 if __name__ == "__main__":
     try:
-        pass
-        # command_arm = CommandArm()
-        # command_arm.move_random()
-        # command_arm.command_arm("Home")
-        # command_arm.command_needle("Retracted")
-        # command_arm.command_needle("Extended")
-        # command_arm.on_finish()
+        command_arm = CommandArm()
+        command_arm.move_random()
+        command_arm.command_arm("Home")
+        command_arm.command_needle("Retracted")
+        command_arm.command_needle("Extended")
+        command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
