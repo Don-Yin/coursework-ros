@@ -79,19 +79,17 @@ class CommandArm:
         pose_target.position.x = entry[0]
         pose_target.position.y = entry[1]
         pose_target.position.z = entry[2]
-        pose_target.orientation.x = quaternion[0]
-        pose_target.orientation.y = quaternion[1]
-        pose_target.orientation.z = quaternion[2]
-        pose_target.orientation.w = quaternion[3]
+        # pose_target.orientation.x = quaternion[0]
+        # pose_target.orientation.y = quaternion[1]
+        # pose_target.orientation.z = quaternion[2]
+        # pose_target.orientation.w = quaternion[3]
         move_group.set_pose_target(pose_target)
 
         # Planning and executing the motion
         plan_success = move_group.go(wait=True)
 
-        while not plan_success:
+        if not plan_success:
             print("Planning failed, trying again")
-            move_group.set_pose_target(pose_target)
-            plan_success = move_group.go(wait=True)
 
         move_group.stop()
         move_group.clear_pose_targets()
