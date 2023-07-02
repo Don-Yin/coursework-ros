@@ -69,7 +69,7 @@ class CommandArm:
 
         # Calculate the direction vector from entry to target
         direction = target - entry
-        # direction = direction / np.linalg.norm(direction)
+        direction = direction / np.linalg.norm(direction)
 
         # Assuming the 'up' direction is along z-axis of the robot base frame
         up = np.array([0, 0, 1])
