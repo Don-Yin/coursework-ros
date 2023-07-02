@@ -38,11 +38,16 @@ def main():
     publisher = rospy.Publisher("visualization_marker", Marker, queue_size=10)
     rospy.sleep(1)
 
+    scale_factor = 0.1
     entires_fcsv = FcsvParser(Path("data", "entries.fcsv"))
     targets_fcsv = FcsvParser(Path("data", "targets.fcsv"))
 
-    entries_coords = entires_fcsv.content_dataframe[["x", "y", "z"]].values
-    targets_coords = targets_fcsv.content_dataframe[["x", "y", "z"]].values
+    entries_coords = (
+        entires_fcsv.content_dataframe[["x", "y", "z"]].values * scale_factor
+    )
+    targets_coords = (
+        targets_fcsv.content_dataframe[["x", "y", "z"]].values * scale_factor
+    )
 
     frame_id = "base_link"
 
@@ -76,5 +81,5 @@ def test():
 
 
 if __name__ == "__main__":
-    # main()
-    test()
+    main()
+    # test()
