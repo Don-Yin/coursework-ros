@@ -54,10 +54,9 @@ class CommandArm:
         move_group.set_position_target(coordinates)
         plan_success = move_group.go(wait=True)
 
-        while not plan_success:
+        # while not plan_success:
+        if not plan_success:
             print("Planning failed, trying again")
-            move_group.set_position_target(coordinates)
-            plan_success = move_group.go(wait=True)
 
         move_group.stop()
         move_group.clear_pose_targets()
@@ -66,6 +65,7 @@ class CommandArm:
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
+        move_group.set_planning_time(10)
         # move_group.set_planner_id("RRTConnect")
 
         # Calculate the direction vector from entry to target
@@ -79,10 +79,10 @@ class CommandArm:
         pose_target.position.x = entry[0]
         pose_target.position.y = entry[1]
         pose_target.position.z = entry[2]
-        pose_target.orientation.x = 0
-        pose_target.orientation.y = 0
-        pose_target.orientation.z = 0
-        pose_target.orientation.w = 1
+        pose_target.orientation.x = quaternion[0]
+        pose_target.orientation.y = quaternion[1]
+        pose_target.orientation.z = quaternion[2]
+        pose_target.orientation.w = quaternion[3]
         move_group.set_pose_target(pose_target)
 
         # Planning and executing the motion
@@ -206,8 +206,8 @@ if __name__ == "__main__":
         # command_arm.pose_needle("Retracted")
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
-        command_arm.end_effector_positon(entry)
-        # command_arm.end_effector_position_orientation(entry, target)
+        # command_arm.end_effector_positon(entry)
+        command_arm.end_effector_position_orientation(entry, target)
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
