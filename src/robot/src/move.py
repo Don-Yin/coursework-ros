@@ -10,7 +10,7 @@ import math
 
 
 def convert_slicer_to_ros(point):
-    scale_factor = 0.1
+    scale_factor = 0.08
     point = point * scale_factor
     position_correction = np.array([-28.0, -12.5, 8])
     point = point + position_correction
@@ -226,7 +226,7 @@ if __name__ == "__main__":
         # command_arm.move_random()
         command_arm.pose_arm("Home")
         command_arm.rotate_base()
-        # command_arm.pose_needle("Retracted")
+        command_arm.pose_needle("Retracted")
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
         # command_arm.end_effector_positon(entry)
