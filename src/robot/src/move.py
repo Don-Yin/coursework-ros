@@ -4,10 +4,15 @@ import rospy
 import sys
 import moveit_commander
 import geometry_msgs
+import numpy as np
 
 
 def convert_slicer_to_ros(point):
-    return [-point[0], point[1], point[2]]
+    scale_factor = 0.08
+    point = point * scale_factor
+    position_correction = np.array([10.0, 0.0, 0.0])
+    point = point + position_correction
+    return np.array([-point[0], point[1], point[2]])
 
 
 class CommandArm:
@@ -134,17 +139,11 @@ if __name__ == "__main__":
     import json
     from pathlib import Path
 
-    scale_factor = 0.08
-
     with open(Path("assets", "entry_target_real.json"), "r") as loader:
         data = json.load(loader)
 
     entry, target = data["original_coordinates"][0], data["original_coordinates"][1]
-
-    print(entry, target)
-
-    entry = tuple([(i * scale_factor).__round__(2) for i in entry])
-    target = tuple([(i * scale_factor).__round__(2) for i in target])
+    entry, target = np.array(entry), np.array(target)
 
     entry = convert_slicer_to_ros(entry)
     target = convert_slicer_to_ros(target)

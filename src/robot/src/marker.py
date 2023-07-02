@@ -14,7 +14,11 @@ from fcsv import FcsvParser
 
 
 def convert_slicer_to_ros(point):
-    return [-point[0], point[1], point[2]]
+    scale_factor = 0.08
+    point = point * scale_factor
+    position_correction = np.array([10.0, 0.0, 0.0])
+    point = point + position_correction
+    return np.array([-point[0], point[1], point[2]])
 
 
 def create_marker(color, namespace, frame_id, points):
@@ -42,16 +46,11 @@ def main():
     publisher = rospy.Publisher("visualization_marker", Marker, queue_size=10)
     rospy.sleep(1)
 
-    scale_factor = 0.08
     entires_fcsv = FcsvParser(Path("data", "entries.fcsv"))
     targets_fcsv = FcsvParser(Path("data", "targets.fcsv"))
 
-    entries_coords = (
-        entires_fcsv.content_dataframe[["x", "y", "z"]].values * scale_factor
-    )
-    targets_coords = (
-        targets_fcsv.content_dataframe[["x", "y", "z"]].values * scale_factor
-    )
+    entries_coords = entires_fcsv.content_dataframe[["x", "y", "z"]].values
+    targets_coords = targets_fcsv.content_dataframe[["x", "y", "z"]].values
 
     entries_coords = [convert_slicer_to_ros(p) for p in entries_coords]
     targets_coords = [convert_slicer_to_ros(p) for p in targets_coords]
