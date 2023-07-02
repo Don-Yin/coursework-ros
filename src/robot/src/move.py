@@ -85,7 +85,7 @@ class CommandArm:
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
-        move_group.set_planner_id("PRMstar")
+        move_group.set_planner_id("LBKPIECE")
         move_group.set_max_velocity_scaling_factor(1.0)
         move_group.set_max_acceleration_scaling_factor(1.0)
 
@@ -135,24 +135,25 @@ class CommandArm:
         # try to correct the orientation by running the runtion again
         # i want you to amend here and add a new statement
 
-        orientation_difference = [
-            pose_target.orientation.x
-            - move_group.get_current_pose().pose.orientation.x,
-            pose_target.orientation.y
-            - move_group.get_current_pose().pose.orientation.y,
-            pose_target.orientation.z
-            - move_group.get_current_pose().pose.orientation.z,
-            pose_target.orientation.w
-            - move_group.get_current_pose().pose.orientation.w,
-        ]
-        orientation_difference = np.linalg.norm(orientation_difference)
+        if plan_success:
+            orientation_difference = [
+                pose_target.orientation.x
+                - move_group.get_current_pose().pose.orientation.x,
+                pose_target.orientation.y
+                - move_group.get_current_pose().pose.orientation.y,
+                pose_target.orientation.z
+                - move_group.get_current_pose().pose.orientation.z,
+                pose_target.orientation.w
+                - move_group.get_current_pose().pose.orientation.w,
+            ]
+            orientation_difference = np.linalg.norm(orientation_difference)
 
-        print("Orientation difference: ", orientation_difference)
-        if orientation_difference > 0.01:
             print("Orientation difference: ", orientation_difference)
-            self.end_effector_position_orientation(
-                entry, target, orientation_tolerance=orientation_tolerance // 2
-            )
+            if orientation_difference > 0.01:
+                print("Orientation difference: ", orientation_difference)
+                self.end_effector_position_orientation(
+                    entry, target, orientation_tolerance=orientation_tolerance // 2
+                )
 
         if not plan_success:
             print("Planning failed, trying again")
