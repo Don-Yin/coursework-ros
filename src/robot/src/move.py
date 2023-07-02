@@ -130,17 +130,17 @@ if __name__ == "__main__":
     import json
     from pathlib import Path
 
-    scale_factor = 0.05
+    scale_factor = 0.07
 
     with open(Path("assets", "entry_target_real.json"), "r") as loader:
         data = json.load(loader)
 
-    entry, target = data["original_coordinates"][0], data["original_coordinates"][1]
+    target, entry = data["original_coordinates"][0], data["original_coordinates"][1]
 
     print(entry, target)
 
-    entry = tuple([(i * scale_factor).__round__(2) for i in entry])
     target = tuple([(i * scale_factor).__round__(2) for i in target])
+    entry = tuple([(i * scale_factor).__round__(2) for i in entry])
 
     try:
         command_arm = CommandArm()

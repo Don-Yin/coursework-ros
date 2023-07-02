@@ -38,7 +38,7 @@ def main():
     publisher = rospy.Publisher("visualization_marker", Marker, queue_size=10)
     rospy.sleep(1)
 
-    scale_factor = 0.05
+    scale_factor = 0.07
     entires_fcsv = FcsvParser(Path("data", "entries.fcsv"))
     targets_fcsv = FcsvParser(Path("data", "targets.fcsv"))
 
