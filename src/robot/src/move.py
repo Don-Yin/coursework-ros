@@ -137,8 +137,8 @@ if __name__ == "__main__":
 
     print(entry, target)
 
-    entry = tuple([i * 0.075 for i in entry])
-    target = tuple([i * 0.075 for i in target])
+    entry = tuple([(i * 0.075).__round__(2) for i in entry])
+    target = tuple([(i * 0.075).__round__(2) for i in target])
 
     try:
         command_arm = CommandArm()
