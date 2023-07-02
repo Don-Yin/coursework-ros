@@ -81,6 +81,9 @@ class CommandArm:
         pitch = np.arcsin(up[2])
         yaw = np.arctan2(-direction[1], direction[0])
 
+        planning_frame = move_group.get_planning_frame()
+        print("Planning frame: ", planning_frame)
+
         # Clear previous pose targets
         move_group.clear_pose_targets()
 
