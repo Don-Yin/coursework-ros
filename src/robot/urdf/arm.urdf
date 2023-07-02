@@ -140,7 +140,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <sphere radius="1" />
+        <sphere radius="0.7" />
       </geometry>
     </visual>
     <collision>
