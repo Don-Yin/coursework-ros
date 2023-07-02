@@ -89,12 +89,9 @@ class CommandArm:
         plan = move_group.go(wait=True)
 
         while not plan:
-            try:
-                print("Planning failed, trying again")
-                move_group.set_pose_target(pose_goal)
-                plan = move_group.go(wait=True)
-            except KeyboardInterrupt:
-                break
+            print("Planning failed, trying again")
+            move_group.set_pose_target(pose_goal)
+            plan = move_group.go(wait=True)
 
         move_group.stop()
         move_group.clear_pose_targets()
@@ -110,7 +107,7 @@ if __name__ == "__main__":
         # command_arm.pose_arm("Home")
         # command_arm.pose_needle("Retracted")
         # command_arm.pose_needle("Extended")
-        command_arm.move_end_effector((10, 10, 10), (0, 0, 0, 1))
+        command_arm.move_end_effector((5, 5, 5), (0, 0, 0, 1))
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
