@@ -89,7 +89,14 @@ class CommandArm:
 
         # Set the target position and orientation
         move_group.set_position_target(entry.tolist())
+
+        planning_frame = move_group.get_planning_frame()
+        print("Planning frame: ", planning_frame)
+
         move_group.set_rpy_target([roll, pitch, yaw])
+
+        planning_frame = move_group.get_planning_frame()
+        print("Planning frame: ", planning_frame)
 
         # Planning and executing the motion
         plan_success = move_group.go(wait=True)
