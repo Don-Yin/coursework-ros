@@ -135,7 +135,6 @@ class CommandArm:
         # try to correct the orientation by running the runtion again
         # i want you to amend here and add a new statement
 
-        print("Orientation difference: ", orientation_difference)
         orientation_difference = (
             move_group.get_goal_orientation()
             - move_group.get_current_pose().pose.orientation
@@ -148,6 +147,7 @@ class CommandArm:
                 orientation_difference.w,
             ]
         )
+        print("Orientation difference: ", orientation_difference)
         if orientation_difference > 0.01:
             print("Orientation difference: ", orientation_difference)
             self.end_effector_position_orientation(
