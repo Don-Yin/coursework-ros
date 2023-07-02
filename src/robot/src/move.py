@@ -12,7 +12,7 @@ import math
 def convert_slicer_to_ros(point):
     scale_factor = 0.08
     point = point * scale_factor
-    position_correction = np.array([-27.0, -10, 6])
+    position_correction = np.array([-25.0, -10, 6])
     point = point + position_correction
     return np.array([-point[0], point[1], point[2]])
 
@@ -198,7 +198,7 @@ class CommandArm:
 
         # Getting the current joint values for the robot:
         joint_goal = move_group.get_current_joint_values()
-        joint_goal[0] = math.radians(90)  # 'rotator1' joint
+        joint_goal[0] = math.radians(-90)  # 'rotator1' joint
         move_group.go(joint_goal, wait=True)
         move_group.stop()
 
@@ -222,9 +222,11 @@ if __name__ == "__main__":
     try:
         command_arm = CommandArm()
         # command_arm.move_random()
+
         command_arm.pose_arm("Home")
         command_arm.rotate_base()
         command_arm.pose_needle("Retracted")
+
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
         # command_arm.end_effector_positon(entry)
