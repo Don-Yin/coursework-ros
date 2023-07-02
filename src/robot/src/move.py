@@ -6,6 +6,7 @@ import moveit_commander
 import geometry_msgs
 import numpy as np
 from tf.transformations import quaternion_from_euler
+import math
 
 
 def convert_slicer_to_ros(point):
@@ -194,6 +195,15 @@ class CommandArm:
         move_group.stop()
         move_group.clear_pose_targets()
 
+    def rotate_base(self):
+        move_group = moveit_commander.MoveGroupCommander("arm_group")
+
+        # Getting the current joint values for the robot:
+        joint_goal = move_group.get_current_joint_values()
+        joint_goal[0] = math.radians(90)  # 'rotator1' joint
+        move_group.go(joint_goal, wait=True)
+        move_group.stop()
+
     def on_finish(self):
         moveit_commander.roscpp_shutdown()
 
@@ -219,12 +229,8 @@ if __name__ == "__main__":
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
         # command_arm.end_effector_positon(entry)
-        command_arm.end_effector_position_orientation(
-            entry, target, orientation_tolerance=0.3
-        )
-        command_arm.end_effector_position_orientation(
-            entry, target, orientation_tolerance=0.2
-        )
+        command_arm.rotate_base()
+        command_arm.end_effector_position_orientation(entry, target)
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
