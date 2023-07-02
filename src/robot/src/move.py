@@ -5,6 +5,7 @@ import sys
 import moveit_commander
 import geometry_msgs
 import numpy as np
+from tf.transformations import quaternion_from_euler
 
 
 def convert_slicer_to_ros(point):
