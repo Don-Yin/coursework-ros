@@ -12,7 +12,7 @@ import math
 def convert_slicer_to_ros(point):
     scale_factor = 0.08
     point = point * scale_factor
-    position_correction = np.array([-28.0, -10, 6])
+    position_correction = np.array([-27.0, -10, 6])
     point = point + position_correction
     return np.array([-point[0], point[1], point[2]])
 
@@ -80,9 +80,7 @@ class CommandArm:
         move_group.stop()
         move_group.clear_pose_targets()
 
-    def end_effector_position_orientation(
-        self, entry: np.array, target: np.array, orientation_tolerance=0.3
-    ):
+    def end_effector_position_orientation(self, entry: np.array, target: np.array):
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
@@ -91,7 +89,7 @@ class CommandArm:
         move_group.set_max_acceleration_scaling_factor(1.0)
 
         # move_group.set_goal_position_tolerance(0.5)
-        move_group.set_goal_orientation_tolerance(orientation_tolerance)
+        move_group.set_goal_orientation_tolerance(1)
 
         # Calculate the direction vector from entry to target
         direction = target - entry
