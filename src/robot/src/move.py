@@ -11,7 +11,7 @@ from tf.transformations import quaternion_from_euler
 def convert_slicer_to_ros(point):
     scale_factor = 0.08
     point = point * scale_factor
-    position_correction = np.array([-30.0, -10.0, 5.0])
+    position_correction = np.array([-24.0, -10.0, 5.0])
     point = point + position_correction
     return np.array([-point[0], point[1], point[2]])
 
@@ -88,7 +88,7 @@ class CommandArm:
         move_group.set_max_acceleration_scaling_factor(1.0)
 
         move_group.set_goal_position_tolerance(0.5)
-        move_group.set_goal_orientation_tolerance(0.5)
+        # move_group.set_goal_orientation_tolerance(0.5)
 
         # Calculate the direction vector from entry to target
         direction = target - entry
