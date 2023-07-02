@@ -11,7 +11,7 @@ from tf.transformations import quaternion_from_euler
 def convert_slicer_to_ros(point):
     scale_factor = 0.1
     point = point * scale_factor
-    position_correction = np.array([-30.0, -12.5, 5.0])
+    position_correction = np.array([-30.0, -12.5, 2.5])
     point = point + position_correction
     return np.array([-point[0], point[1], point[2]])
 
@@ -83,7 +83,7 @@ class CommandArm:
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
-        move_group.set_planner_id("RRT")
+        move_group.set_planner_id("RRTstar")
         move_group.set_max_velocity_scaling_factor(1.0)
         move_group.set_max_acceleration_scaling_factor(1.0)
 
@@ -119,10 +119,10 @@ class CommandArm:
 
         move_group.set_pose_target(pose_target)
 
-        max_attempts = 5
+        max_attempts = 3
         num_attempts = 0
         plan_success = False
-        move_group.set_planning_time(30)
+        move_group.set_planning_time(10)
 
         while not plan_success and num_attempts < max_attempts:
             print("Planning attempt: ", num_attempts)
