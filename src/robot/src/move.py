@@ -53,7 +53,7 @@ class CommandArm:
     def end_effector_position_orientation(self, entry: np.array, target: np.array):
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
-        move_group.set_end_effector_link("needle")
+        move_group.set_end_effector_link("sphere")
 
         # Calculate the direction vector from entry to target
         direction = target - entry
