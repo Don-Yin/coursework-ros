@@ -12,7 +12,7 @@ import math
 def convert_slicer_to_ros(point):
     scale_factor = 0.08
     point = point * scale_factor
-    position_correction = np.array([-32.0, -10, 6])
+    position_correction = np.array([-29.0, -10, 7])
     point = point + position_correction
     return np.array([-point[0], point[1], point[2]])
 
@@ -84,7 +84,7 @@ class CommandArm:
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
-        # move_group.set_planner_id("SBL")
+        move_group.set_planner_id("LBTRRT")
         move_group.set_max_velocity_scaling_factor(1.0)
         move_group.set_max_acceleration_scaling_factor(1.0)
 
@@ -223,9 +223,9 @@ if __name__ == "__main__":
         command_arm = CommandArm()
         # command_arm.move_random()
 
-        command_arm.pose_arm("Home")
-        command_arm.rotate_base()
-        command_arm.pose_needle("Retracted")
+        # command_arm.pose_arm("Home")
+        # command_arm.rotate_base()
+        # command_arm.pose_needle("Retracted")
 
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
