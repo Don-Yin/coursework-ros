@@ -86,7 +86,7 @@ class CommandArm:
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
-        move_group.set_planner_id("BiTRRT")
+        # move_group.set_planner_id("BiTRRT")
         move_group.set_max_velocity_scaling_factor(1.0)
         move_group.set_max_acceleration_scaling_factor(1.0)
 
@@ -225,11 +225,11 @@ if __name__ == "__main__":
         command_arm = CommandArm()
         # command_arm.move_random()
         command_arm.pose_arm("Home")
+        command_arm.rotate_base()
         # command_arm.pose_needle("Retracted")
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
         # command_arm.end_effector_positon(entry)
-        command_arm.rotate_base()
         command_arm.end_effector_position_orientation(entry, target)
         command_arm.on_finish()
     except rospy.ROSInterruptException:
