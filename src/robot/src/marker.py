@@ -45,7 +45,7 @@ def main():
     targets_coords = targets_fcsv.content_dataframe[["x", "y", "z"]].values
 
     # Assume that all points are defined in the 'world' frame
-    frame_id = "world"
+    frame_id = "base_link"
 
     # Create and publish markers
     entries_marker = create_marker(
@@ -69,7 +69,7 @@ def test():
     coords = np.array([[10, 10, 10]])
 
     # Assume that all points are defined in the 'world' frame
-    frame_id = "world"
+    frame_id = "base_link"
 
     # Create and publish markers
     marker = create_marker(ColorRGBA(1.0, 0, 0, 1.0), "entries", frame_id, coords)
