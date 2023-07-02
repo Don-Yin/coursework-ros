@@ -87,7 +87,7 @@ class CommandArm:
         move_group.set_planner_id("RRTConnectk")
 
         move_group.set_goal_position_tolerance(1)
-        # move_group.set_goal_orientation_tolerance(1)
+        move_group.set_goal_orientation_tolerance(1)
 
         # Calculate the direction vector from entry to target
         direction = target - entry
