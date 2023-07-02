@@ -133,8 +133,8 @@ if __name__ == "__main__":
 
     print(entry, target)
 
-    entry *= 0.075
-    target *= 0.075
+    entry = [i * 0.075 for i in entry]
+    target = [i * 0.075 for i in target]
 
     try:
         command_arm = CommandArm()
