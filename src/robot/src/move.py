@@ -83,11 +83,12 @@ class CommandArm:
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
-        move_group.set_planning_time(10)
         move_group.set_planner_id("RRTConnectk")
+        move_group.set_max_velocity_scaling_factor(1.0)
+        move_group.set_max_acceleration_scaling_factor(1.0)
 
-        move_group.set_goal_position_tolerance(1)
-        move_group.set_goal_orientation_tolerance(1)
+        move_group.set_goal_position_tolerance(0.1)
+        move_group.set_goal_orientation_tolerance(0.01)
 
         # Calculate the direction vector from entry to target
         direction = target - entry
@@ -121,6 +122,7 @@ class CommandArm:
         max_attempts = 5
         num_attempts = 0
         plan_success = False
+        move_group.set_planning_time(30)
 
         while not plan_success and num_attempts < max_attempts:
             print("Planning attempt: ", num_attempts)
