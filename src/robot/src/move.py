@@ -4,6 +4,11 @@ import rospy
 import sys
 import moveit_commander
 
+import os
+from pathlib import Path
+
+print(os.listdir("."))
+
 
 class CommandArm:
     def __init__(self):
@@ -73,11 +78,12 @@ class CommandArm:
 
 if __name__ == "__main__":
     try:
-        command_arm = CommandArm()
-        command_arm.move_random()
-        command_arm.command_arm("Home")
-        command_arm.command_needle("Retracted")
-        command_arm.command_needle("Extended")
-        command_arm.on_finish()
+        pass
+        # command_arm = CommandArm()
+        # command_arm.move_random()
+        # command_arm.command_arm("Home")
+        # command_arm.command_needle("Retracted")
+        # command_arm.command_needle("Extended")
+        # command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
