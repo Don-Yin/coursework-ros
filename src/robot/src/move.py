@@ -74,6 +74,9 @@ class CommandArm:
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("needle")
 
+        # Set the planning time to a higher value
+        move_group.set_planning_time(10)
+
         pose_goal = geometry_msgs.msg.Pose()
         pose_goal.position.x = coordinates[0]
         pose_goal.position.y = coordinates[1]
@@ -107,7 +110,7 @@ if __name__ == "__main__":
         # command_arm.pose_arm("Home")
         # command_arm.pose_needle("Retracted")
         # command_arm.pose_needle("Extended")
-        command_arm.move_end_effector((5, 5, 5), (0, 0, 0, 1))
+        command_arm.move_end_effector((10, 10, 10))
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
