@@ -129,7 +129,10 @@ if __name__ == "__main__":
     with open(Path("assets", "entry_target_real.json"), "r") as loader:
         data = json.load(loader)
 
-    entry, target = data["original_coordinates"]
+    entry, target = data["original_coordinates"][0], data["original_coordinates"][1]
+
+    print(entry, target)
+
     entry *= 0.075
     target *= 0.075
 
