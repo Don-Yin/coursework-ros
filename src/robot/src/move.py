@@ -31,8 +31,6 @@ class CommandArm:
         self.robot = moveit_commander.RobotCommander()
 
     def end_effector_positon(self, coordinates: tuple):
-        print(coordinates)
-
         """orientation is not considered"""
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
@@ -52,8 +50,6 @@ class CommandArm:
         move_group.clear_pose_targets()
 
     def end_effector_pose(self, coordinates: tuple, orientations: tuple = None):
-        print(coordinates)
-
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("needle")
@@ -155,7 +151,10 @@ if __name__ == "__main__":
         # command_arm.pose_needle("Retracted")
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
-        command_arm.end_effector_positon(entry)
+        # command_arm.end_effector_positon(entry)
+        command_arm.end_effector_pose(
+            entry, orientations=(np.sqrt(2) / 2, 0, np.sqrt(2) / 2, 0)
+        )
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
