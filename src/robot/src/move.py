@@ -134,7 +134,7 @@ if __name__ == "__main__":
     import json
     from pathlib import Path
 
-    scale_factor = 0.07
+    scale_factor = 0.08
 
     with open(Path("assets", "entry_target_real.json"), "r") as loader:
         data = json.load(loader)
