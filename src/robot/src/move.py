@@ -8,20 +8,28 @@ import geometry_msgs
 
 class CommandArm:
     def __init__(self):
+        """
+        The robot variable can be used for:
+        1. Get the Robot's Kinematic Model
+        2. Get the Current State of the Robot
+        3. Check Joint Limits
+        4. Get the Robot's End Effectors
+        5. Set the Robot's Start State
+        6. Check Collision
+        """
         moveit_commander.roscpp_initialize(sys.argv)
         rospy.init_node("move_end_effector", anonymous=True)
+        self.robot = moveit_commander.RobotCommander()
 
-    def move_to_position(self, coordinates: tuple):
-        robot = moveit_commander.RobotCommander()
+    def end_effector_positon(self, coordinates: tuple):
+        """orientation is not considered"""
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
 
         # Set the planning time to a higher value
         move_group.set_planning_time(10)
-
         move_group.set_position_target(coordinates)
-
         plan_success = move_group.go(wait=True)
 
         while not plan_success:
@@ -32,8 +40,7 @@ class CommandArm:
         move_group.stop()
         move_group.clear_pose_targets()
 
-    def move_end_effector(self, coordinates: tuple, orientations: tuple = None):
-        robot = moveit_commander.RobotCommander()
+    def end_effector_pose(self, coordinates: tuple, orientations: tuple = None):
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("needle")
@@ -63,47 +70,8 @@ class CommandArm:
         move_group.stop()
         move_group.clear_pose_targets()
 
-    # def move_end_effector(self, coordinates: tuple, orientations: tuple = None):
-    #     robot = moveit_commander.RobotCommander()
-    #     group_name = "arm_group"
-    #     move_group = moveit_commander.MoveGroupCommander(group_name)
-    #     move_group.set_end_effector_link("needle")
-    #     move_group.set_planning_time(10)
-
-    #     pose_goal = geometry_msgs.msg.PoseStamped()
-    #     pose_goal.header.frame_id = "base_link"  # Here you set the frame_id
-    #     pose_goal.pose.position.x = coordinates[0]
-    #     pose_goal.pose.position.y = coordinates[1]
-    #     pose_goal.pose.position.z = coordinates[2]
-
-    #     if orientations is not None:
-    #         pose_goal.pose.orientation.x = orientations[0]
-    #         pose_goal.pose.orientation.y = orientations[1]
-    #         pose_goal.pose.orientation.z = orientations[2]
-    #         pose_goal.pose.orientation.w = orientations[3]
-
-    #     move_group.set_pose_target(pose_goal)
-    #     plan = move_group.go(wait=True)
-
-    #     while not plan:
-    #         print("Planning failed, trying again")
-    #         move_group.set_pose_target(pose_goal)
-    #         plan = move_group.go(wait=True)
-
-    #     move_group.stop()
-    #     move_group.clear_pose_targets()
-
     def move_random(self):
-        """
-        The robot variable can be used for:
-        1. Get the Robot's Kinematic Model
-        2. Get the Current State of the Robot
-        3. Check Joint Limits
-        4. Get the Robot's End Effectors
-        5. Set the Robot's Start State
-        6. Check Collision
-        """
-        robot = moveit_commander.RobotCommander()
+        """For testing purpose"""
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("needle")
@@ -162,7 +130,7 @@ if __name__ == "__main__":
         # command_arm.pose_needle("Retracted")
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
-        command_arm.move_to_position((10, 10, 10))
+        command_arm.end_effector_positon((10, 10, 10))
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass

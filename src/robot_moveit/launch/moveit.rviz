@@ -17,6 +17,11 @@ Panels:
 Visualization Manager:
   Class: ""
   Displays:
+    - Class: rviz/Marker
+      Marker Topic: /visualization_marker
+      Queue Size: 10
+      Name: VisualizationMarker
+      Enabled: true
     - Alpha: 0.5
       Cell Size: 1
       Class: rviz/Grid
