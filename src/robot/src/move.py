@@ -89,9 +89,12 @@ class CommandArm:
         plan = move_group.go(wait=True)
 
         while not plan:
-            print("Planning failed, trying again")
-            move_group.set_pose_target(pose_goal)
-            plan = move_group.go(wait=True)
+            try:
+                print("Planning failed, trying again")
+                move_group.set_pose_target(pose_goal)
+                plan = move_group.go(wait=True)
+            except KeyboardInterrupt:
+                break
 
         move_group.stop()
         move_group.clear_pose_targets()
