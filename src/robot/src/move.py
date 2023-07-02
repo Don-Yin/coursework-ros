@@ -71,16 +71,6 @@ class CommandArm:
         moveit_commander.roscpp_shutdown()
 
 
-entires_fcsv = FcsvParser(Path("data", "entries.fcsv"))
-targets_fcsv = FcsvParser(Path("data", "targets.fcsv"))
-
-entries_coords = entires_fcsv.content_dataframe[["x", "y", "z"]].values
-targets_coords = targets_fcsv.content_dataframe[["x", "y", "z"]].values
-
-print(entries_coords)
-print(targets_coords)
-
-
 if __name__ == "__main__":
     try:
         pass
