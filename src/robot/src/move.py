@@ -11,6 +11,27 @@ class CommandArm:
         moveit_commander.roscpp_initialize(sys.argv)
         rospy.init_node("move_end_effector", anonymous=True)
 
+    def move_to_position(self, coordinates: tuple):
+        robot = moveit_commander.RobotCommander()
+        group_name = "arm_group"
+        move_group = moveit_commander.MoveGroupCommander(group_name)
+        move_group.set_end_effector_link("needle")
+
+        # Set the planning time to a higher value
+        move_group.set_planning_time(10)
+
+        move_group.set_position_target(coordinates)
+
+        plan_success = move_group.go(wait=True)
+
+        while not plan_success:
+            print("Planning failed, trying again")
+            move_group.set_position_target(coordinates)
+            plan_success = move_group.go(wait=True)
+
+        move_group.stop()
+        move_group.clear_pose_targets()
+
     def move_end_effector(self, coordinates: tuple, orientations: tuple = None):
         robot = moveit_commander.RobotCommander()
         group_name = "arm_group"
@@ -140,7 +161,8 @@ if __name__ == "__main__":
         # command_arm.pose_arm("Home")
         # command_arm.pose_needle("Retracted")
         # command_arm.pose_needle("Extended")
-        command_arm.move_end_effector((10, 10, 10))
+        # command_arm.move_end_effector((10, 10, 10))
+        command_arm.move_to_position((10, 10, 10))
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
