@@ -79,7 +79,9 @@ class CommandArm:
         move_group.stop()
         move_group.clear_pose_targets()
 
-    def end_effector_position_orientation(self, entry: np.array, target: np.array):
+    def end_effector_position_orientation(
+        self, entry: np.array, target: np.array, orientation_tolerance=0.5
+    ):
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
@@ -88,7 +90,7 @@ class CommandArm:
         move_group.set_max_acceleration_scaling_factor(1.0)
 
         # move_group.set_goal_position_tolerance(0.5)
-        move_group.set_goal_orientation_tolerance(0.5)
+        move_group.set_goal_orientation_tolerance(orientation_tolerance)
 
         # Calculate the direction vector from entry to target
         direction = target - entry
@@ -128,6 +130,29 @@ class CommandArm:
             print("Planning attempt: ", num_attempts)
             plan_success = move_group.go(wait=True)
             num_attempts += 1
+
+        # if proceeded here and suceeded with some residuals on the orientation
+        # try to correct the orientation by running the runtion again
+        # i want you to amend here and add a new statement
+
+        print("Orientation difference: ", orientation_difference)
+        orientation_difference = (
+            move_group.get_goal_orientation()
+            - move_group.get_current_pose().pose.orientation
+        )
+        orientation_difference = np.linalg.norm(
+            [
+                orientation_difference.x,
+                orientation_difference.y,
+                orientation_difference.z,
+                orientation_difference.w,
+            ]
+        )
+        if orientation_difference > 0.01:
+            print("Orientation difference: ", orientation_difference)
+            self.end_effector_position_orientation(
+                entry, target, orientation_tolerance=orientation_tolerance // 2
+            )
 
         if not plan_success:
             print("Planning failed, trying again")
