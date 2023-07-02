@@ -13,6 +13,10 @@ sys.path.insert(0, "src/modules")
 from fcsv import FcsvParser
 
 
+def convert_slicer_to_ros(point):
+    return [-point[0], point[1], point[2]]
+
+
 def create_marker(color, namespace, frame_id, points):
     size_scale = 0.4
     marker = Marker()
@@ -48,6 +52,9 @@ def main():
     targets_coords = (
         targets_fcsv.content_dataframe[["x", "y", "z"]].values * scale_factor
     )
+
+    entries_coords = [convert_slicer_to_ros(p) for p in entries_coords]
+    targets_coords = [convert_slicer_to_ros(p) for p in targets_coords]
 
     frame_id = "base_link"
 

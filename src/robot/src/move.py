@@ -6,6 +6,10 @@ import moveit_commander
 import geometry_msgs
 
 
+def convert_slicer_to_ros(point):
+    return [-point[0], point[1], point[2]]
+
+
 class CommandArm:
     def __init__(self):
         """
@@ -135,12 +139,15 @@ if __name__ == "__main__":
     with open(Path("assets", "entry_target_real.json"), "r") as loader:
         data = json.load(loader)
 
-    target, entry = data["original_coordinates"][0], data["original_coordinates"][1]
+    entry, target = data["original_coordinates"][0], data["original_coordinates"][1]
 
     print(entry, target)
 
-    target = tuple([(i * scale_factor).__round__(2) for i in target])
     entry = tuple([(i * scale_factor).__round__(2) for i in entry])
+    target = tuple([(i * scale_factor).__round__(2) for i in target])
+
+    entry = [convert_slicer_to_ros(p) for p in entry]
+    target = [convert_slicer_to_ros(p) for p in target]
 
     try:
         command_arm = CommandArm()
