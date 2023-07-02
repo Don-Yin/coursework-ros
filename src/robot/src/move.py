@@ -21,7 +21,7 @@ class CommandArm:
         move_group.set_planning_time(10)
 
         # Use a different planner
-        move_group.set_planner_id("RRTConnectkConfigDefault")
+        move_group.set_planner_id("RRTConnect")
 
         pose_goal = geometry_msgs.msg.PoseStamped()
         pose_goal.header.frame_id = "base_link"
