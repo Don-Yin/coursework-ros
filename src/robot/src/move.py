@@ -11,7 +11,7 @@ from tf.transformations import quaternion_from_euler
 def convert_slicer_to_ros(point):
     scale_factor = 0.1
     point = point * scale_factor
-    position_correction = np.array([-30.0, -12.5, 1])
+    position_correction = np.array([-27.0, -12.5, 0])
     point = point + position_correction
     return np.array([-point[0], point[1], point[2]])
 
@@ -219,8 +219,12 @@ if __name__ == "__main__":
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
         # command_arm.end_effector_positon(entry)
-        command_arm.end_effector_position_orientation(entry, target, orientation_tolerance=0.3)
-        command_arm.end_effector_position_orientation(entry, target, orientation_tolerance=0.2)
+        command_arm.end_effector_position_orientation(
+            entry, target, orientation_tolerance=0.3
+        )
+        command_arm.end_effector_position_orientation(
+            entry, target, orientation_tolerance=0.2
+        )
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
