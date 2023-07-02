@@ -35,7 +35,7 @@ def create_marker(color, namespace, frame_id, points):
 def main():
     rospy.init_node("marker_publisher")
     publisher = rospy.Publisher("visualization_marker", Marker, queue_size=10)
-    rospy.sleep(1)  # Give the publisher a bit of time to connect
+    rospy.sleep(1)
 
     entires_fcsv = FcsvParser(Path("data", "entries.fcsv"))
     targets_fcsv = FcsvParser(Path("data", "targets.fcsv"))
@@ -60,5 +60,24 @@ def main():
     rospy.spin()
 
 
+def test():
+    rospy.init_node("marker_publisher")
+    publisher = rospy.Publisher("visualization_marker", Marker, queue_size=10)
+    rospy.sleep(1)
+
+    coords = np.array([[10, 10, 10]])
+
+    # Assume that all points are defined in the 'world' frame
+    frame_id = "world"
+
+    # Create and publish markers
+    marker = create_marker(ColorRGBA(1.0, 0, 0, 1.0), "entries", frame_id, coords)
+
+    publisher.publish(marker)
+
+    rospy.spin()
+
+
 if __name__ == "__main__":
-    main()
+    # main()
+    test()
