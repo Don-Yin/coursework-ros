@@ -52,7 +52,7 @@ class CommandArm:
     def end_effector_pose(self, coordinates: tuple, orientations: tuple = None):
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
-        move_group.set_end_effector_link("needle")
+        move_group.set_end_effector_link("sphere")
 
         # Set the planning time to a higher value
         move_group.set_planning_time(10)
