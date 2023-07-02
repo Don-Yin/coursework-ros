@@ -18,9 +18,9 @@ class CommandArm:
         move_group.set_end_effector_link("needle")
 
         # Set the planning time to a higher value
-        move_group.set_planning_time(10)
+        move_group.set_planning_time(30)
 
-        pose_goal = geometry_msgs.msg.PoseStamped()  # Use PoseStamped instead of Pose
+        pose_goal = geometry_msgs.msg.PoseStamped()
         pose_goal.header.frame_id = "base_link"  # Here you set the frame_id
         pose_goal.pose.position.x = coordinates[0]
         pose_goal.pose.position.y = coordinates[1]
