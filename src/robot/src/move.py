@@ -66,10 +66,10 @@ class CommandArm:
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
+        move_group.set_planner_id("RRTConnect")
 
         # Calculate the direction vector from entry to target
         direction = target - entry
-        direction = direction / np.linalg.norm(direction)
 
         # Calculate quaternion from the 'entry' vector to the 'direction' vector
         quaternion = quaternion_from_two_vectors(entry, direction)
@@ -79,10 +79,10 @@ class CommandArm:
         pose_target.position.x = entry[0]
         pose_target.position.y = entry[1]
         pose_target.position.z = entry[2]
-        # pose_target.orientation.x = quaternion[0]
-        # pose_target.orientation.y = quaternion[1]
-        # pose_target.orientation.z = quaternion[2]
-        # pose_target.orientation.w = quaternion[3]
+        pose_target.orientation.x = quaternion[0]
+        pose_target.orientation.y = quaternion[1]
+        pose_target.orientation.z = quaternion[2]
+        pose_target.orientation.w = quaternion[3]
         move_group.set_pose_target(pose_target)
 
         # Planning and executing the motion
