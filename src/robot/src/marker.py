@@ -16,7 +16,7 @@ from fcsv import FcsvParser
 def convert_slicer_to_ros(point):
     scale_factor = 0.08
     point = point * scale_factor
-    position_correction = np.array([-27.0, -10, 6])
+    position_correction = np.array([-27.0, -10, 4])
     point = point + position_correction 
     return np.array([-point[0], point[1], point[2]])
 
