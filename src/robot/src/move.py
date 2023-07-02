@@ -4,13 +4,6 @@ import rospy
 import sys
 import moveit_commander
 
-import os
-from pathlib import Path
-import sys
-sys.path.insert(0, 'src/modules')
-# from src.modules.fcsv import FcsvParser
-from fcsv import FcsvParser
-
 
 class CommandArm:
     def __init__(self):
