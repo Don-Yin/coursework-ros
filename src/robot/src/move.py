@@ -12,7 +12,7 @@ import math
 def convert_slicer_to_ros(point):
     scale_factor = 0.08
     point = point * scale_factor
-    position_correction = np.array([-25.0, -10, 6])
+    position_correction = np.array([-32.0, -10, 6])
     point = point + position_correction
     return np.array([-point[0], point[1], point[2]])
 
@@ -84,7 +84,7 @@ class CommandArm:
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
-        move_group.set_planner_id("SBL")
+        # move_group.set_planner_id("SBL")
         move_group.set_max_velocity_scaling_factor(1.0)
         move_group.set_max_acceleration_scaling_factor(1.0)
 
@@ -123,7 +123,7 @@ class CommandArm:
         max_attempts = 3
         num_attempts = 0
         plan_success = False
-        move_group.set_planning_time(120)
+        move_group.set_planning_time(45)
 
         while not plan_success and num_attempts < max_attempts:
             print("Planning attempt: ", num_attempts)
