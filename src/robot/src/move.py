@@ -10,7 +10,7 @@ import numpy as np
 def convert_slicer_to_ros(point):
     scale_factor = 0.08
     point = point * scale_factor
-    position_correction = np.array([-30.0, -10.0, 0.0])
+    position_correction = np.array([-30.0, -10.0, 10.0])
     point = point + position_correction
     return np.array([-point[0], point[1], point[2]])
 
