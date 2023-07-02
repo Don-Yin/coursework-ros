@@ -79,18 +79,16 @@ class CommandArm:
         move_group.stop()
         move_group.clear_pose_targets()
 
-    def end_effector_position_orientation(
-        self, entry: np.array, target: np.array, orientation_tolerance=0.5
-    ):
+    def end_effector_position_orientation(self, entry: np.array, target: np.array):
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
-        move_group.set_planner_id("LBKPIECE")
+        move_group.set_planner_id("BiTRRT")
         move_group.set_max_velocity_scaling_factor(1.0)
         move_group.set_max_acceleration_scaling_factor(1.0)
 
         # move_group.set_goal_position_tolerance(0.5)
-        move_group.set_goal_orientation_tolerance(orientation_tolerance)
+        move_group.set_goal_orientation_tolerance(0.4)
 
         # Calculate the direction vector from entry to target
         direction = target - entry
@@ -124,7 +122,7 @@ class CommandArm:
         max_attempts = 3
         num_attempts = 0
         plan_success = False
-        move_group.set_planning_time(10)
+        move_group.set_planning_time(30)
 
         while not plan_success and num_attempts < max_attempts:
             print("Planning attempt: ", num_attempts)
@@ -133,27 +131,6 @@ class CommandArm:
 
         # if proceeded here and suceeded with some residuals on the orientation
         # try to correct the orientation by running the runtion again
-        # i want you to amend here and add a new statement
-
-        if plan_success:
-            orientation_difference = [
-                pose_target.orientation.x
-                - move_group.get_current_pose().pose.orientation.x,
-                pose_target.orientation.y
-                - move_group.get_current_pose().pose.orientation.y,
-                pose_target.orientation.z
-                - move_group.get_current_pose().pose.orientation.z,
-                pose_target.orientation.w
-                - move_group.get_current_pose().pose.orientation.w,
-            ]
-            orientation_difference = np.linalg.norm(orientation_difference)
-
-            print("Orientation difference: ", orientation_difference)
-            if orientation_difference > 0.01:
-                print("Orientation difference: ", orientation_difference)
-                self.end_effector_position_orientation(
-                    entry, target, orientation_tolerance=orientation_tolerance // 2
-                )
 
         if not plan_success:
             print("Planning failed, trying again")
