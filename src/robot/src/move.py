@@ -79,10 +79,10 @@ class CommandArm:
         pose_target.position.x = entry[0]
         pose_target.position.y = entry[1]
         pose_target.position.z = entry[2]
-        pose_target.orientation.x = quaternion[0]
-        pose_target.orientation.y = quaternion[1]
-        pose_target.orientation.z = quaternion[2]
-        pose_target.orientation.w = quaternion[3]
+        pose_target.orientation.x = 0
+        pose_target.orientation.y = 0
+        pose_target.orientation.z = 0
+        pose_target.orientation.w = 1
         move_group.set_pose_target(pose_target)
 
         # Planning and executing the motion
