@@ -123,6 +123,16 @@ class CommandArm:
 
 
 if __name__ == "__main__":
+    import json
+    from pathlib import Path
+
+    with open(Path("assets", "entry_target_real.json"), "r") as loader:
+        data = json.load(loader)
+
+    entry, target = data["original_coordinates"]
+    entry *= 0.075
+    target *= 0.075
+
     try:
         command_arm = CommandArm()
         # command_arm.move_random()
@@ -130,7 +140,7 @@ if __name__ == "__main__":
         # command_arm.pose_needle("Retracted")
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
-        command_arm.end_effector_positon((10, 10, 10))
+        command_arm.end_effector_positon(entry)
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
