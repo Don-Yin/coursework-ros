@@ -66,30 +66,31 @@ class CommandArm:
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
-        move_group.set_planning_time(10)
 
         # Calculate the direction vector from entry to target
         direction = target - entry
         direction = direction / np.linalg.norm(direction)
 
-        # Calculate quaternion from the 'entry' vector to the 'direction' vector
-        quaternion = quaternion_from_two_vectors(entry, direction)
+        # Assuming the 'up' direction is along z-axis of the robot base frame
+        up = np.array([0, 0, 1])
+        right = np.cross(direction, up)
+        up = np.cross(right, direction)
 
-        pose_target = geometry_msgs.msg.Pose()
-        pose_target.position.x = entry[0]
-        pose_target.position.y = entry[1]
-        pose_target.position.z = entry[2]
-        pose_target.orientation.x = quaternion[0]
-        pose_target.orientation.y = quaternion[1]
-        pose_target.orientation.z = quaternion[2]
-        pose_target.orientation.w = quaternion[3]
+        # Calculate roll, pitch, yaw angles from the direction and up vectors
+        roll = np.arctan2(-up[1], up[0])
+        pitch = np.arcsin(up[2])
+        yaw = np.arctan2(-direction[1], direction[0])
+
+        # Set the target position and orientation
+        move_group.set_position_target(entry.tolist())
+        move_group.set_rpy_target([roll, pitch, yaw])
 
         # Planning and executing the motion
-        move_group.go(pose_target, wait=True)
+        plan_success = move_group.go(wait=True)
 
-        # # while not plan_success:
-        # if not plan_success:
-        #     print("Planning failed, trying again")
+        # while not plan_success:
+        if not plan_success:
+            print("Planning failed, trying again")
 
         move_group.stop()
         move_group.clear_pose_targets()
