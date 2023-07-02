@@ -79,7 +79,9 @@ class CommandArm:
         move_group.stop()
         move_group.clear_pose_targets()
 
-    def end_effector_position_orientation(self, entry: np.array, target: np.array):
+    def end_effector_position_orientation(
+        self, entry: np.array, target: np.array, orientation_tolerance=0.3
+    ):
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
@@ -88,7 +90,7 @@ class CommandArm:
         move_group.set_max_acceleration_scaling_factor(1.0)
 
         # move_group.set_goal_position_tolerance(0.5)
-        move_group.set_goal_orientation_tolerance(0.3)
+        move_group.set_goal_orientation_tolerance(orientation_tolerance)
 
         # Calculate the direction vector from entry to target
         direction = target - entry
@@ -217,7 +219,8 @@ if __name__ == "__main__":
         # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
         # command_arm.end_effector_positon(entry)
-        command_arm.end_effector_position_orientation(entry, target)
+        command_arm.end_effector_position_orientation(entry, target, orientation_tolerance=0.3)
+        command_arm.end_effector_position_orientation(entry, target, orientation_tolerance=0.2)
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
