@@ -11,7 +11,7 @@ from tf.transformations import quaternion_from_euler
 def convert_slicer_to_ros(point):
     scale_factor = 0.08
     point = point * scale_factor
-    position_correction = np.array([-25.0, -10.0, 5.0])
+    position_correction = np.array([-30.0, -10.0, 5.0])
     point = point + position_correction
     return np.array([-point[0], point[1], point[2]])
 
@@ -81,22 +81,12 @@ class CommandArm:
         pitch = np.arcsin(up[2])
         yaw = np.arctan2(-direction[1], direction[0])
 
-        planning_frame = move_group.get_planning_frame()
-        print("Planning frame: ", planning_frame)
-
         # Clear previous pose targets
         move_group.clear_pose_targets()
 
         # Set the target position and orientation
         move_group.set_position_target(entry.tolist())
-
-        planning_frame = move_group.get_planning_frame()
-        print("Planning frame: ", planning_frame)
-
         move_group.set_rpy_target([roll, pitch, yaw])
-
-        planning_frame = move_group.get_planning_frame()
-        print("Planning frame: ", planning_frame)
 
         # Planning and executing the motion
         plan_success = move_group.go(wait=True)
