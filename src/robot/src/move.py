@@ -135,18 +135,18 @@ class CommandArm:
         # try to correct the orientation by running the runtion again
         # i want you to amend here and add a new statement
 
-        orientation_difference = (
-            move_group.get_goal_orientation()
-            - move_group.get_current_pose().pose.orientation
-        )
-        orientation_difference = np.linalg.norm(
-            [
-                orientation_difference.x,
-                orientation_difference.y,
-                orientation_difference.z,
-                orientation_difference.w,
-            ]
-        )
+        orientation_difference = [
+            pose_target.orientation.x
+            - move_group.get_current_pose().pose.orientation.x,
+            pose_target.orientation.y
+            - move_group.get_current_pose().pose.orientation.y,
+            pose_target.orientation.z
+            - move_group.get_current_pose().pose.orientation.z,
+            pose_target.orientation.w
+            - move_group.get_current_pose().pose.orientation.w,
+        ]
+        orientation_difference = np.linalg.norm(orientation_difference)
+
         print("Orientation difference: ", orientation_difference)
         if orientation_difference > 0.01:
             print("Orientation difference: ", orientation_difference)
