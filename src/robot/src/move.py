@@ -81,6 +81,9 @@ class CommandArm:
         pitch = np.arcsin(up[2])
         yaw = np.arctan2(-direction[1], direction[0])
 
+        # Clear previous pose targets
+        move_group.clear_pose_targets()
+
         # Set the target position and orientation
         move_group.set_position_target(entry.tolist())
         move_group.set_rpy_target([roll, pitch, yaw])
