@@ -5,7 +5,7 @@ import sys
 import moveit_commander
 import geometry_msgs
 import numpy as np
-from tf.transformations import quaternion_from_euler
+from tf.transformations import quaternion_from_euler, quaternion_from_matrix
 
 
 def convert_slicer_to_ros(point):
@@ -70,15 +70,11 @@ class CommandArm:
         # Recalculate the up vector as the cross product of right and direction
         up = np.cross(right, direction)
 
-        # Calculate roll, pitch, yaw angles from the direction and up vectors
-        roll = np.arctan2(-up[1], up[0])
-        pitch = np.arcsin(up[2])
-        yaw = np.arctan2(-direction[1], direction[0])
+        # Construct rotation matrix
+        rotation_matrix = np.array([right, up, direction])
 
-        # Convert roll, pitch, yaw to a quaternion
-        quaternion = quaternion_from_euler(roll, pitch, yaw)
-
-        print("Quaternion: ", quaternion)
+        # Convert the rotation matrix to a quaternion
+        quaternion = quaternion_from_matrix(rotation_matrix)
 
         # Set the pose target
         pose_target = geometry_msgs.msg.Pose()
@@ -117,6 +113,8 @@ class CommandArm:
 
         move_group.stop()
         move_group.clear_pose_targets()
+
+    # default poses ---------------------------------------------
 
     def pose_needle(self, pose: str):
         robot = moveit_commander.RobotCommander()
