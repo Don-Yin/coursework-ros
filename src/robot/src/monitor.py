@@ -18,7 +18,7 @@ def monitor_end_effector():
     move_group = moveit_commander.MoveGroupCommander(group_name)
 
     # We need to specify the end effector
-    move_group.set_end_effector_link("needle")
+    move_group.set_end_effector_link("sphere")
 
     # control the rate of printing
     rate = rospy.Rate(1)  # 1 Hz
