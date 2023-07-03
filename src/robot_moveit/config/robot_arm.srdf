@@ -32,10 +32,10 @@
         <joint name="pivot2_to_arm2" value="0"/>
     </group_state>
     <group_state name="Extended" group="needle_group">
-        <joint name="sphere_to_needle" value="1"/>
+        <joint name="sphere_to_needle" value="4"/>
     </group_state>
     <group_state name="Retracted" group="needle_group">
-        <joint name="sphere_to_needle" value="0"/>
+        <joint name="sphere_to_needle" value="0.6"/>
     </group_state>
     <!--END EFFECTOR: Purpose: Represent information about an end effector.-->
     <end_effector name="end_effector" parent_link="sphere" group="needle_group" parent_group="arm_group"/>
