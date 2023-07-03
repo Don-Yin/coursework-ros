@@ -65,8 +65,8 @@ def main():
     entries_coords = [convert_slicer_to_ros(p) for p in entries_coords]
     targets_coords = [convert_slicer_to_ros(p) for p in targets_coords]
 
-    entries_coords = [i for i in entries_coords if np.array_equal(i, entry)]
-    targets_coords = [i for i in targets_coords if np.array_equal(i, target)]
+    entries_coords = [i for i in entries_coords if not np.array_equal(i, entry)]
+    targets_coords = [i for i in targets_coords if not np.array_equal(i, target)]
 
     frame_id = "base_link"
 
@@ -84,7 +84,7 @@ def main():
         ColorRGBA(1.0, 1.0, 0, 1.0), "chosen_entry", frame_id, [entry]
     )
     chosen_target_marker = create_marker(
-        ColorRGBA(0, 0, 1.0, 1.0), "chosen_target", frame_id, [target]
+        ColorRGBA(1.0, 1.0, 0, 1.0), "chosen_target", frame_id, [target]
     )
 
     publisher.publish(entries_markers)
