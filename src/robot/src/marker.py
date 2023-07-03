@@ -65,6 +65,11 @@ def main():
     entries_coords = [convert_slicer_to_ros(p) for p in entries_coords]
     targets_coords = [convert_slicer_to_ros(p) for p in targets_coords]
 
+    for i in entries_coords:
+        print(i)
+
+    print("entry", entry)
+
     entries_coords = [i for i in entries_coords if i != entry]
     targets_coords = [i for i in targets_coords if i != target]
 
