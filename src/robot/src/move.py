@@ -110,7 +110,7 @@ class CommandArm:
         yaw = np.arctan2(-direction[1], direction[0])
 
         # convert the roll, pitch, yaw to a quaternion
-        quaternion = quaternion_from_euler(roll, pitch, yaw, axes="sxyz")
+        quaternion = quaternion_from_euler(roll, pitch, yaw, axes="xyzs")
 
         # Set the pose target
         pose_target = geometry_msgs.msg.Pose()
