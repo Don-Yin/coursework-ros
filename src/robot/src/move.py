@@ -98,23 +98,24 @@ class CommandArm:
         direction = target - entry
         direction = direction / np.linalg.norm(direction)
 
-        # Assuming the 'up' direction is along z-axis of the robot base frame
-        up = np.array([0, 0, 1])
-        right = np.cross(direction, up)
+        # Assuming the 'up' direction is along z-axis of the world frame
+        world_up = np.array([0, 0, 1])
+        right = np.cross(direction, world_up)
+        right = right / np.linalg.norm(right)  # normalize to get unit vector
         up = np.cross(right, direction)
 
         # Creating rotation matrix
-        rotation_matrix = np.array([right, up, -direction])
+        rotation_matrix = np.array([direction, right, up])
 
         # Converting rotation matrix to quaternion
-        rotation = Rotation.from_matrix(rotation_matrix)
+        rotation = Rotation.from_matrix(rotation_matrix.T)
         quaternion = rotation.as_quat()
 
         # Set the pose target
         pose_target = geometry_msgs.msg.Pose()
-        pose_target.position.x = entry[0]
-        pose_target.position.y = entry[1]
-        pose_target.position.z = entry[2]
+        pose_target.position.x = target[0]
+        pose_target.position.y = target[1]
+        pose_target.position.z = target[2]
         pose_target.orientation.x = quaternion[0]
         pose_target.orientation.y = quaternion[1]
         pose_target.orientation.z = quaternion[2]
