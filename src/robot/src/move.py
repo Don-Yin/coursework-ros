@@ -88,7 +88,7 @@ class CommandArm:
         move_group.set_max_velocity_scaling_factor(1.0)
         move_group.set_max_acceleration_scaling_factor(1.0)
 
-        move_group.set_goal_position_tolerance(3)
+        move_group.set_goal_position_tolerance(1)
         # move_group.set_goal_orientation_tolerance(0.1)
 
         # Calculate the direction vector from entry to target
