@@ -92,7 +92,7 @@ class CommandArm:
         move_group.set_max_velocity_scaling_factor(1.0)
         move_group.set_max_acceleration_scaling_factor(1.0)
 
-        move_group.set_goal_position_tolerance(0.0001)
+        move_group.set_goal_position_tolerance(0.001)
         # move_group.set_goal_orientation_tolerance(0.001)
 
         # Calculate the direction vector from entry to target
@@ -227,16 +227,18 @@ if __name__ == "__main__":
 
     try:
         command_arm = CommandArm()
+        command_arm.pose_needle("Retracted")
+
         # command_arm.move_random()
 
         # command_arm.pose_arm("Home")
-        # command_arm.rotate_base()
-        # command_arm.pose_needle("Retracted")
+        command_arm.rotate_base()
 
-        # command_arm.pose_needle("Extended")
         # command_arm.move_end_effector((10, 10, 10))
         # command_arm.end_effector_positon(entry)
         command_arm.end_effector_position_orientation(entry, target)
+
+        command_arm.pose_needle("Extended")
         command_arm.on_finish()
     except rospy.ROSInterruptException:
         pass
