@@ -112,6 +112,8 @@ class CommandArm:
         # convert the roll, pitch, yaw to a quaternion
         quaternion = quaternion_from_euler(roll, pitch, yaw, axes="sxyz")
 
+        print("quaternion: ", quaternion)
+
         # Set the pose target
         pose_target = geometry_msgs.msg.Pose()
         pose_target.position.x = entry[0]
