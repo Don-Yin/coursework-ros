@@ -12,7 +12,9 @@ import math
 def convert_slicer_to_ros(point):
     scale_factor = 0.08
     point = point * scale_factor
-    position_correction = np.array([-29.5, -10.5, 0])
+    position_correction = np.array([-29.5, -10.5, 0]) + np.array(
+        [0.24189148, 0.39875013, 0.64597378]
+    )
     point = point + position_correction
     return np.array([-point[0], point[1], point[2]])
 
@@ -88,7 +90,7 @@ class CommandArm:
         move_group.set_max_velocity_scaling_factor(1.0)
         move_group.set_max_acceleration_scaling_factor(1.0)
 
-        move_group.set_goal_position_tolerance(1)
+        move_group.set_goal_position_tolerance(0.1)
         # move_group.set_goal_orientation_tolerance(0.1)
 
         # Calculate the direction vector from entry to target
@@ -218,6 +220,10 @@ if __name__ == "__main__":
 
     entry = convert_slicer_to_ros(entry)
     target = convert_slicer_to_ros(target)
+
+    # x: 13.054211475649826
+    # y: 0.6121101280070368
+    # z: 9.881893780147616
 
     try:
         command_arm = CommandArm()
