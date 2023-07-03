@@ -83,7 +83,7 @@ class CommandArm:
         move_group.clear_pose_targets()
 
     def end_effector_position_orientation(self, entry: np.array, target: np.array):
-        target += np.array([0, 0.2, 0])
+        # target += np.array([0, -1, 0])
 
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
@@ -92,7 +92,7 @@ class CommandArm:
         move_group.set_max_velocity_scaling_factor(1.0)
         move_group.set_max_acceleration_scaling_factor(1.0)
 
-        move_group.set_goal_position_tolerance(1)
+        move_group.set_goal_position_tolerance(0.0001)
         # move_group.set_goal_orientation_tolerance(0.001)
 
         # Calculate the direction vector from entry to target
@@ -222,10 +222,6 @@ if __name__ == "__main__":
 
     entry = convert_slicer_to_ros(entry)
     target = convert_slicer_to_ros(target)
-
-    # x: 13.054211475649826
-    # y: 0.6121101280070368
-    # z: 9.881893780147616
 
     try:
         command_arm = CommandArm()
