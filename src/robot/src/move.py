@@ -92,7 +92,7 @@ class CommandArm:
         move_group.set_max_velocity_scaling_factor(1.0)
         move_group.set_max_acceleration_scaling_factor(1.0)
 
-        move_group.set_goal_position_tolerance(0.01)
+        move_group.set_goal_position_tolerance(0.0001)
         # move_group.set_goal_orientation_tolerance(0.001)
 
         # Calculate the direction vector from entry to target
@@ -110,7 +110,7 @@ class CommandArm:
         yaw = np.arctan2(-direction[1], direction[0])
 
         # convert the roll, pitch, yaw to a quaternion
-        quaternion = quaternion_from_euler(roll, pitch, yaw, axes="xyzs")
+        quaternion = quaternion_from_euler(roll, pitch, yaw, axes="sxyz")
 
         # Set the pose target
         pose_target = geometry_msgs.msg.Pose()
