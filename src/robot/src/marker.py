@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-import os
 from pathlib import Path
 import sys
 import rospy
@@ -8,6 +7,7 @@ from visualization_msgs.msg import Marker
 from std_msgs.msg import ColorRGBA
 import geometry_msgs.msg
 import numpy as np
+import json
 
 sys.path.insert(0, "src/modules")
 from fcsv import FcsvParser
@@ -17,8 +17,18 @@ def convert_slicer_to_ros(point):
     scale_factor = 0.08
     point = point * scale_factor
     position_correction = np.array([-27.0, -10, 3])
-    point = point + position_correction 
+    point = point + position_correction
     return np.array([-point[0], point[1], point[2]])
+
+
+with open(Path("assets", "entry_target_real.json"), "r") as loader:
+    data = json.load(loader)
+
+entry, target = data["original_coordinates"][0], data["original_coordinates"][1]
+entry, target = np.array(entry), np.array(target)
+
+entry = convert_slicer_to_ros(entry)
+target = convert_slicer_to_ros(target)
 
 
 def create_marker(color, namespace, frame_id, points):
@@ -55,37 +65,35 @@ def main():
     entries_coords = [convert_slicer_to_ros(p) for p in entries_coords]
     targets_coords = [convert_slicer_to_ros(p) for p in targets_coords]
 
+    entries_coords = [i for i in entries_coords if i != entry]
+    targets_coords = [i for i in targets_coords if i != target]
+
     frame_id = "base_link"
 
     # Create and publish markers
-    entries_marker = create_marker(
+    entries_markers = create_marker(
         ColorRGBA(1.0, 0, 0, 1.0), "entries", frame_id, entries_coords
     )
-    targets_marker = create_marker(
+    targets_markers = create_marker(
         ColorRGBA(0, 1.0, 0, 1.0), "targets", frame_id, targets_coords
     )
 
-    publisher.publish(entries_marker)
-    publisher.publish(targets_marker)
+    # the chosen entry and target
 
-    rospy.spin()
+    chosen_entry_marker = create_marker(
+        ColorRGBA(1.0, 1.0, 0, 1.0), "chosen_entry", frame_id, [entry]
+    )
+    chosen_target_marker = create_marker(
+        ColorRGBA(0, 0, 1.0, 1.0), "chosen_target", frame_id, [target]
+    )
 
-
-def test():
-    rospy.init_node("marker_publisher")
-    publisher = rospy.Publisher("visualization_marker", Marker, queue_size=10)
-    rospy.sleep(1)
-
-    coords = np.array([[10, 10, 10]])
-    frame_id = "base_link"
-
-    marker = create_marker(ColorRGBA(1.0, 0, 0, 1.0), "entries", frame_id, coords)
-
-    publisher.publish(marker)
+    publisher.publish(entries_markers)
+    publisher.publish(targets_markers)
+    publisher.publish(chosen_entry_marker)
+    publisher.publish(chosen_target_marker)
 
     rospy.spin()
 
 
 if __name__ == "__main__":
     main()
-    # test()
