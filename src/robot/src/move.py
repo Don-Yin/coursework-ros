@@ -83,8 +83,6 @@ class CommandArm:
         move_group.clear_pose_targets()
 
     def end_effector_position_orientation(self, entry: np.array, target: np.array):
-        # target += np.array([0, -1, 0])
-
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_end_effector_link("sphere")
@@ -151,6 +149,8 @@ class CommandArm:
         """For testing purpose"""
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
+        move_group.set_max_velocity_scaling_factor(1.0)
+        move_group.set_max_acceleration_scaling_factor(1.0)
         move_group.set_end_effector_link("needle")
         move_group.set_random_target()
         plan_success = move_group.go(wait=True)
@@ -166,7 +166,6 @@ class CommandArm:
     # default poses ---------------------------------------------
 
     def pose_needle(self, pose: str):
-        robot = moveit_commander.RobotCommander()
         group_name = "needle_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_max_velocity_scaling_factor(1.0)
@@ -184,7 +183,6 @@ class CommandArm:
         move_group.clear_pose_targets()
 
     def pose_arm(self, pose: str = "Home"):
-        robot = moveit_commander.RobotCommander()
         group_name = "arm_group"
         move_group = moveit_commander.MoveGroupCommander(group_name)
         move_group.set_max_velocity_scaling_factor(1.0)
@@ -203,6 +201,8 @@ class CommandArm:
 
     def rotate_base(self):
         move_group = moveit_commander.MoveGroupCommander("arm_group")
+        move_group.set_max_velocity_scaling_factor(1.0)
+        move_group.set_max_acceleration_scaling_factor(1.0)
 
         # Getting the current joint values for the robot:
         joint_goal = move_group.get_current_joint_values()
@@ -230,16 +230,8 @@ if __name__ == "__main__":
     try:
         command_arm = CommandArm()
         command_arm.pose_needle("Retracted")
-
-        # command_arm.move_random()
-
-        # command_arm.pose_arm("Home")
         command_arm.rotate_base()
-
-        # command_arm.move_end_effector((10, 10, 10))
-        # command_arm.end_effector_positon(entry)
         command_arm.end_effector_position_orientation(entry, target)
-
         command_arm.pose_needle("Extended")
         command_arm.on_finish()
     except rospy.ROSInterruptException:
