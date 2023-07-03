@@ -105,9 +105,9 @@ class CommandArm:
         up = np.cross(right, direction)
 
         # Calculate roll, pitch, yaw angles from the direction and up vectors
-        roll = np.arctan2(-up[1], up[0])
+        roll = np.arctan2(up[1], up[0])
         pitch = np.arcsin(up[2])
-        yaw = np.arctan2(-direction[1], direction[0])
+        yaw = np.arctan2(direction[1], direction[0])
 
         # convert the roll, pitch, yaw to a quaternion
         quaternion = quaternion_from_euler(roll, pitch, yaw, axes="sxyz")
