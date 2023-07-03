@@ -98,7 +98,7 @@ class CommandArm:
         direction = direction / np.linalg.norm(direction)
 
         # Assuming the 'up' direction is along z-axis of the robot base frame
-        up = np.array([0, 0, 1])
+        up = np.array([0, 0, -1])
         right = np.cross(direction, up)
         up = np.cross(right, direction)
 
