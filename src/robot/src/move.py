@@ -5,6 +5,7 @@ import sys
 import moveit_commander
 import geometry_msgs
 import numpy as np
+from scipy.spatial.transform import Rotation
 from tf.transformations import quaternion_from_euler
 import math
 
@@ -90,7 +91,7 @@ class CommandArm:
         move_group.set_max_velocity_scaling_factor(1.0)
         move_group.set_max_acceleration_scaling_factor(1.0)
 
-        move_group.set_goal_position_tolerance(0.5)
+        move_group.set_goal_position_tolerance(10)
         # move_group.set_goal_orientation_tolerance(0.1)
 
         # Calculate the direction vector from entry to target
@@ -98,17 +99,16 @@ class CommandArm:
         direction = direction / np.linalg.norm(direction)
 
         # Assuming the 'up' direction is along z-axis of the robot base frame
-        up = np.array([0, 0, -1])
+        up = np.array([0, 0, 1])
         right = np.cross(direction, up)
         up = np.cross(right, direction)
 
-        # Calculate roll, pitch, yaw angles from the direction and up vectors
-        roll = np.arctan2(-up[1], up[0])
-        pitch = np.arcsin(up[2])
-        yaw = np.arctan2(-direction[1], direction[0])
+        # Creating rotation matrix
+        rotation_matrix = np.array([right, up, -direction])
 
-        # convert the roll, pitch, yaw to a quaternion
-        quaternion = quaternion_from_euler(roll, pitch, yaw, axes='sxyz')
+        # Converting rotation matrix to quaternion
+        rotation = Rotation.from_matrix(rotation_matrix)
+        quaternion = rotation.as_quat()
 
         # Set the pose target
         pose_target = geometry_msgs.msg.Pose()
@@ -132,8 +132,8 @@ class CommandArm:
             plan_success = move_group.go(wait=True)
             num_attempts += 1
 
-        # if proceeded here and suceeded with some residuals on the orientation
-        # try to correct the orientation by running the runtion again
+        # if proceeded here and succeeded with some residuals on the orientation
+        # try to correct the orientation by running the function again
 
         if not plan_success:
             print("Planning failed, trying again")
