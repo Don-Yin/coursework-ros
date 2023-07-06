@@ -19,7 +19,18 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def image_to_rotated_array(itk_image):
-    """Convert an ITK image to a numpy array with the correct rotation."""
+    """
+    Convert an ITK image to a numpy array with a 90 degrees rotation along the first and third axes.
+
+    This function transforms an input ITK image into a numpy array. After converting, the array
+    is rotated 90 degrees counter-clockwise in the plane made up of the first and third axes.
+
+    Parameters:
+        itk_image (itk.itkImagePython.itkImage): An image in ITK format.
+
+    Returns:
+        numpy.ndarray: The rotated numpy array corresponding to the input image.
+    """
     array = GetArrayFromImage(itk_image)
     array = np.rot90(array, 1, axes=(0, 2))
     return array
@@ -107,6 +118,7 @@ files_dict_real = {
     ],
 }
 
+# these variables are then imported in the main scripts
 (
     entries_targets_combs,
     images_meshes,
@@ -117,18 +129,6 @@ files_dict_real = {
     entries_coords_in_array,
     targets_coords_in_array,
 ) = prepare_variables(files_dict_real)
-# entries_targets_combs = entries_targets_combs[:10]
 
 if __name__ == "__main__":
     pass
-
-
-# offset: (0.0, 0.0, 0.0)
-# direction: (-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0)
-# spacing: (4.0, 4.0, 4.0)
-# shape: (64, 64, 55)
-
-# offset: (0.0, 0.0, 0.0)
-# direction: (-1.0, 0.0, 0.0, 0.0, -1.0, 0.0, 0.0, 0.0, 1.0)
-# spacing: (1.0, 1.0, 1.0)
-# shape: (256, 256, 220)

@@ -42,9 +42,8 @@ class CommandArm:
         move_group.set_position_target(coordinates)
         plan_success = move_group.go(wait=True)
 
-        # while not plan_success:
         if not plan_success:
-            print("Planning failed, trying again")
+            print("Failed to reach the goal position")
 
         move_group.stop()
         move_group.clear_pose_targets()
@@ -75,7 +74,7 @@ class CommandArm:
         plan_success = move_group.go(wait=True)
 
         if not plan_success:
-            print("Planning failed, trying again")
+            print("Failed to reach the goal position")
 
         move_group.stop()
         move_group.clear_pose_targets()
@@ -133,7 +132,7 @@ class CommandArm:
             num_attempts += 1
 
         if not plan_success:
-            print("Planning failed, trying again")
+            print("Failed to reach the goal position")
 
         move_group.stop()
         move_group.clear_pose_targets()
@@ -150,10 +149,8 @@ class CommandArm:
         move_group.set_random_target()
         plan_success = move_group.go(wait=True)
 
-        while not plan_success:
-            print("Planning failed, trying again")
-            move_group.set_random_target()
-            plan_success = move_group.go(wait=True)
+        if not plan_success:
+            print("Failed to reach the goal position")
 
         move_group.stop()
         move_group.clear_pose_targets()
@@ -169,10 +166,8 @@ class CommandArm:
         move_group.set_named_target(pose)
         plan_success = move_group.go(wait=True)
 
-        while not plan_success:
-            print("Planning failed, trying again")
-            move_group.set_named_target(pose)
-            plan_success = move_group.go(wait=True)
+        if not plan_success:
+            print("Failed to reach the goal position")
 
         move_group.stop()
         move_group.clear_pose_targets()
@@ -186,10 +181,8 @@ class CommandArm:
         move_group.set_named_target(pose)
         plan_success = move_group.go(wait=True)
 
-        while not plan_success:
-            print("Planning failed, trying again")
-            move_group.set_named_target(pose)
-            plan_success = move_group.go(wait=True)
+        if not plan_success:
+            print("Failed to reach the goal position")
 
         move_group.stop()
         move_group.clear_pose_targets()

@@ -1,6 +1,13 @@
 from rich import print
 
-from src.variables import entries_targets_combs, images_meshes, device, entries_coords, targets_coords, samples_itk
+from src.variables import (
+    entries_targets_combs,
+    images_meshes,
+    device,
+    entries_coords,
+    targets_coords,
+    samples_itk,
+)
 import torch
 from torch import tensor
 from tqdm import tqdm
@@ -34,8 +41,28 @@ def is_valid_index(
 ):
     """
     Check whether an index is valid based on intersection conditions and other parameters.
+
+    This function evaluates a set of conditions to determine whether a given index
+    is valid. The conditions currently consider intersection with a target and
+    critical regions, length of the target, and optionally, the angle if the cortex is intersected.
+    The lengths are evaluated in numpy coordinates, not physical ones.
+
+    Parameters:
+        intersect_target (bool): Whether there is an intersection with the target.
+        intersect_critical (bool): Whether there is an intersection with a critical region.
+        intersect_cortex (bool): Whether there is an intersection with the cortex.
+        length_target (float): The length of the target.
+        length_critical (float): The length of the critical region.
+        length_cortex (float): The length of the cortex.
+        distance_target (float): The distance to the target.
+        distance_critical (float): The distance to the critical region.
+        distance_cortex (float): The distance to the cortex.
+        angle_target (float): The angle relative to the target.
+        angle_critical (float): The angle relative to the critical region.
+        angle_cortex (float): The angle relative to the cortex.
+
     Returns:
-    bool: Whether the index is valid.
+        bool: True if the index is valid (based on the given conditions), False otherwise.
     """
     # Add or modify conditions as necessary
     condition = intersect_target and not intersect_critical  # existing condition
@@ -48,17 +75,19 @@ def is_valid_index(
     return condition
 
 
-def find_max_distance_and_indices(entries, targets, images_meshes, batch_size: int = 1000):
+def find_max_distance_and_indices(
+    entries, targets, images_meshes, batch_size: int = 1000
+):
     """
     Break entries_targets_combs into batches of size batch_size.
     For each batch, check the intersection and get the valid indices in the original entries_targets_combs.
     Among the valid indices, find the entry and target with the maximum distance from the critical structure.
 
     Parameters:
-    entries (torch.Tensor): Tensor of entries.
-    targets (torch.Tensor): Tensor of targets.
-    images_meshes (dict): Dictionary containing target and critical structures.
-    batch_size (int, optional): The size of each batch. Default is 1000.
+        entries (torch.Tensor): Tensor of entries.
+        targets (torch.Tensor): Tensor of targets.
+        images_meshes (dict): Dictionary containing target and critical structures.
+        batch_size (int, optional): The size of each batch. Default is 1000.
 
     Returns:
     tuple: The entry and target with the maximum distance from the critical structure and the list of valid indices.
@@ -82,13 +111,28 @@ def find_max_distance_and_indices(entries, targets, images_meshes, batch_size: i
         targets_batch = targets[start_idx:end_idx]
 
         # Perform the intersection check for the current batch
-        intersects_target, lengths_target, distances_target, angles_target = check_intersect_batch(
+        (
+            intersects_target,
+            lengths_target,
+            distances_target,
+            angles_target,
+        ) = check_intersect_batch(
             entries_batch, targets_batch, **images_meshes["target_structure"]
         )
-        intersects_critical, lengths_critical, distances_critical, angles_critical = check_intersect_batch(
+        (
+            intersects_critical,
+            lengths_critical,
+            distances_critical,
+            angles_critical,
+        ) = check_intersect_batch(
             targets_batch, entries_batch, **images_meshes["critical_structure"]
         )
-        intersects_cortex, lengths_cortex, distances_cortex, angles_cortex = check_intersect_batch(
+        (
+            intersects_cortex,
+            lengths_cortex,
+            distances_cortex,
+            angles_cortex,
+        ) = check_intersect_batch(
             entries_batch, entries_batch, **images_meshes["cortex"]
         )
 
@@ -129,20 +173,56 @@ def find_max_distance_and_indices(entries, targets, images_meshes, batch_size: i
 
 
 def get_original_coords(max_distance_entry, max_distance_target):
+    """
+    Retrieves the original coordinates corresponding to the maximum distance entries
+    and targets. The function also asserts that only one coordinate pair matches the
+    given maximum distances. The results, along with the original input distances, are
+    written to a JSON file.
+
+    Parameters:
+    max_distance_entry (torch.Tensor): A torch tensor indicating the maximum distance
+        for the entries.
+    max_distance_target (torch.Tensor): A torch tensor indicating the maximum distance
+        for the targets.
+
+    Purpose:
+    Creates a JSON file named "entry_target.json" with the original coordinates and
+        distances in array space.
+
+    Returns:
+        None
+    """
     entry_final_coord = [
-        i for i in entries_coords if torch.all(point_to_numpy_idx(i, list(samples_itk.values())[0][0]) == max_distance_entry)
+        i
+        for i in entries_coords
+        if torch.all(
+            point_to_numpy_idx(i, list(samples_itk.values())[0][0])
+            == max_distance_entry
+        )
     ]
     target_final_coord = [
-        i for i in targets_coords if torch.all(point_to_numpy_idx(i, list(samples_itk.values())[0][0]) == max_distance_target)
+        i
+        for i in targets_coords
+        if torch.all(
+            point_to_numpy_idx(i, list(samples_itk.values())[0][0])
+            == max_distance_target
+        )
     ]
-    assert len(entry_final_coord) == 1, f"Entry final should be a single point: {entry_final_coord}"
-    assert len(target_final_coord) == 1, f"Target final should be a single point: {target_final_coord}"
+    assert (
+        len(entry_final_coord) == 1
+    ), f"Entry final should be a single point: {entry_final_coord}"
+    assert (
+        len(target_final_coord) == 1
+    ), f"Target final should be a single point: {target_final_coord}"
     entry_final_coord, target_final_coord = entry_final_coord[0], target_final_coord[0]
     print(f"Entry final coord: {entry_final_coord}")
     print(f"Target final coord: {target_final_coord}")
 
     json_content = {
-        "original_coordinates": (entry_final_coord.tolist(), target_final_coord.tolist()),
+        "original_coordinates": (
+            entry_final_coord.tolist(),
+            target_final_coord.tolist(),
+        ),
         "in_array_space": (max_distance_entry.tolist(), max_distance_target.tolist()),
     }
 

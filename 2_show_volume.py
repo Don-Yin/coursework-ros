@@ -100,13 +100,9 @@ def show_volume(volume_array, entries_coords, targets_coords, valid_path=None):
 
 
 if __name__ == "__main__":
-    print(images_itk["target_structure"].shape)  # (256, 256, 220)
-    print(entries_coords_in_array.__len__())  # 575
-    print(
-        entries_coords_in_array[0]
-    )  # tensor([ 59.7180, 125.6850,  31.2930], dtype=torch.float64)
-
-    # valid_path = [((46.0690, 104.9570, 102.5020), (106, 133, 98))]
+    print(images_itk["target_structure"].shape)
+    print(entries_coords_in_array.__len__())
+    print(entries_coords_in_array[0])
 
     import json
     from pathlib import Path
@@ -121,12 +117,14 @@ if __name__ == "__main__":
         targets_coords_in_array,
         valid_path,
     )
+
     show_volume(
         images_itk["critical_structure"],
         entries_coords_in_array,
         targets_coords_in_array,
         valid_path,
     )
+
     show_volume(
         images_itk["cortex"],
         entries_coords_in_array,

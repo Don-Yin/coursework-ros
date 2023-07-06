@@ -97,11 +97,8 @@ def check_intersect(points: tuple[tensor, tensor], verts: tensor, faces: tensor)
         t_intersect = t[intersect_indices]
         first_intersect_face_index: int = intersect_indices[torch.argmin(t_intersect)].item()
 
-        # Calculate the length of the ray between the origin and the intersection point on the first face, and assign it to `length`.
         intersect_point = ray_origin + t[first_intersect_face_index] * ray_direction.squeeze(0)
         length = torch.norm(intersect_point - ray_origin)
-
-        # Calculate the angle between the ray and the normal vector of the first face at the intersection point, and assign it to `angle`.
         normal_intersect = normal[first_intersect_face_index]
         ray_direction_norm = ray_direction / torch.norm(ray_direction)
         normal_intersect_norm = normal_intersect / torch.norm(normal_intersect)
@@ -121,6 +118,9 @@ def check_intersect(points: tuple[tensor, tensor], verts: tensor, faces: tensor)
 
 
 def check_intersect_batch(ray_origins, ray_destinations, verts, faces):
+    """
+    The batch version of `check_intersect` function from above.
+    """
     ray_directions = ray_destinations - ray_origins  # shape: (batch_size, 3) instead of (3,)
 
     batch_size = ray_origins.size(0)
@@ -196,42 +196,25 @@ def check_intersect_batch(ray_origins, ray_destinations, verts, faces):
         length[no_intersect] = torch.norm(ray_destinations[no_intersect] - ray_origins[no_intersect], dim=1)
         angle[no_intersect] = np.nan
 
-        # # Calculate the distance between each vertex and the line / without excluding the vertices outside the line segment
-        # vert_line_distances = torch.norm(
-        #     torch.cross(verts.unsqueeze(0) - ray_origins.unsqueeze(1), verts.unsqueeze(0) - ray_destinations.unsqueeze(1)),
-        #     dim=2,
-        # ) / length.unsqueeze(1)
-
-        # all_distance = torch.min(vert_line_distances, dim=1)[0]
-        # distance[no_intersect] = all_distance[no_intersect]
-
         # Calculate the vector from the ray origin to each vertex
         vert_origin_vectors = verts.unsqueeze(0) - ray_origins.unsqueeze(1)
 
-        # Calculate the vector from the ray origin to the ray destination
         ray_vector = ray_destinations - ray_origins
-
-        # Compute the dot product between each vector and the ray direction
         dot_products = torch.einsum("bij,bj->bi", vert_origin_vectors, ray_vector)
-
-        # Compute square lengths for both the ray and the vector from ray origin to each vertex
         ray_sq_length = torch.sum(ray_vector**2, dim=1)
-
-        # Vertices are within the ray segment if dot product is positive and less than or equal to the square of the length of the ray
         within_ray_segment = (dot_products >= 0) & (dot_products <= ray_sq_length.unsqueeze(1))
-
-        # Calculate the distance between each vertex and the line, but only for vertices within the ray segment
         vert_line_distances = torch.where(
             within_ray_segment,
             torch.norm(
-                torch.cross(vert_origin_vectors, verts.unsqueeze(0) - ray_destinations.unsqueeze(1)),
+                torch.cross(
+                    vert_origin_vectors,
+                    verts.unsqueeze(0) - ray_destinations.unsqueeze(1),
+                ),
                 dim=2,
             )
             / length.unsqueeze(1),
             float("inf"),
         )
-
-        # The minimum distance for each ray (ignoring vertices outside the ray segment)
         all_distance = torch.min(vert_line_distances, dim=1)[0]
         distance[no_intersect] = all_distance[no_intersect]
 
