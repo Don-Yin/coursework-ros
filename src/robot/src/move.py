@@ -218,7 +218,6 @@ if __name__ == "__main__":
     try:
         command_arm = CommandArm()
         command_arm.pose_needle("Retracted")
-        command_arm.rotate_base()
         command_arm.end_effector_position_orientation(entry, target)
         command_arm.pose_needle("Extended")
         command_arm.on_finish()
