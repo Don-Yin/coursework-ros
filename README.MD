@@ -24,6 +24,7 @@ To conduct a unit test for the check_intersect_batch function, which is the main
 Detailed descriptions of the function and its operations can be found in the docstrings and inline comments in the script.
 
 # Video Demo of Moving the Arm
+[![Watch the video](https://img.youtube.com/vi/P7g-ps6yXE8/maxresdefault.jpg)](https://www.youtube.com/watch?v=P7g-ps6yXE8&ab_channel=DonYin)
 
 ------
 
