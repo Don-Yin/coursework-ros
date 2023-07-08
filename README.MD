@@ -26,6 +26,10 @@ Detailed descriptions of the function and its operations can be found in the doc
 # Video Demo of Moving the Arm
 [![Watch the video](https://img.youtube.com/vi/P7g-ps6yXE8/maxresdefault.jpg)](https://www.youtube.com/watch?v=P7g-ps6yXE8&ab_channel=DonYin)
 
+# Video Demo of the End Effector Orientation Error
+[![Watch the video](https://img.youtube.com/vi/jtVrFUUL0fA/maxresdefault.jpg)](https://youtu.be/jtVrFUUL0fA)
+Note: as mention in the discussion of the report, there is a small error incalculating the orientation of the needle remaining unsolved.
+
 ------
 
 # Repository Development Notes
