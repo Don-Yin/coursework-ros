@@ -11,8 +11,42 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d.art3d import Poly3DCollection
 import numpy as np
 
-
 class TestCheckIntersectBatch(unittest.TestCase):
+    """
+    A class derived from unittest.TestCase that contains tests for the `check_intersect_batch` function.
+
+    The class contains a setup method that initializes the inputs for the function (dummy geometris), including 
+    origin and target tensors, and the vertices and faces of a triangle surface.
+
+    The class also contains methods to test if `check_intersect_batch` function works as expected 
+    in both intersecting and non-intersecting scenarios.
+
+    Methods
+    -------
+    setUp()
+        Sets up the necessary dummy tensors for the function.
+    test_batch_intersect_runs()
+        Tests if the function runs without errors with given tensors to begin with.
+    test_batch_non_intersect_runs()
+        Tests if the function runs without errors with non-intersecting inputs.
+    test_batch_intersection_true()
+        Tests if the function correctly identifies an intersecting scenario.
+    test_batch_intersect_length()
+        Tests if the function calculates correct length in an intersecting scenario.
+    test_batch_intersect_distance()
+        Tests if the function calculates correct distance in an intersecting scenario.
+    test_batch_intersect_angle()
+        Tests if the function calculates correct angle in an intersecting scenario.
+    test_batch_non_intersection_false()
+        Tests if the function correctly identifies a non-intersecting scenario.
+    test_batch_non_intersect_length()
+        Tests if the function calculates correct length in a non-intersecting scenario.
+    test_batch_non_intersect_distance()
+        Tests if the function calculates correct distance in a non-intersecting scenario.
+    test_batch_non_intersect_angle()
+        Tests if the function calculates correct angle in a non-intersecting scenario.
+    """
+
     def setUp(self):
         self.origins = torch.tensor([[1.0, 1.0, 1.0]]).double().to(device)
         self.targets = torch.tensor([[0.2, 0.2, 0.2]]).double().to(device)
