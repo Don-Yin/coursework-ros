@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# # Step 1
-# python3 1_plan_path.py
-# if [ $? -ne 0 ]; then
-#     echo "Python script failed. Exiting..."
-#     exit 1
-# fi
+# Step 1
+python3 1_plan_path.py
+if [ $? -ne 0 ]; then
+    echo "Python script failed. Exiting..."
+    exit 1
+fi
 
 # Step 2
 source setup.sh

@@ -16,6 +16,8 @@ from src.utils.intersect import check_intersect, check_intersect_batch
 from src.utils.coordinate import point_to_numpy_idx
 import json
 
+assert torch.cuda.is_available(), "CUDA is not available; Please make sure cuda is available and try again."
+
 entires = [i[0] for i in entries_targets_combs]
 targets = [i[1] for i in entries_targets_combs]
 entires = torch.stack(entires)

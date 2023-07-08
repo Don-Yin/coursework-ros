@@ -11,3 +11,4 @@ rich
 pyyaml
 nibabel
 numpy-stl
+torch

@@ -1,48 +1,47 @@
-
+This document outlines the requirements and steps to execute the end-to-end pipeline and visual validation of the calculated trajectory for the project. It also discusses unit testing and includes notes on the creation of the work space and individual packages.
 
 # Requirements
+To install the necessary requirements for this project, use the pip command as follows:
 ```pip install -r requirements.txt```
 
-
-# End to End pipeline
+# End-to-End Pipeline
+You can execute the entire pipeline by running the shell script: 
 ```source pipeline.sh```
-Note: this pipeline does not include the Visual Validation on the calculated trajectory, which has to be run separately as seen in below.
 
+Please note that the pipeline requires Torch with CUDA drivers installed. The pipeline does not include the Visual Validation of the calculated trajectory, which must be run separately.
 
-# Visual Validation on the calculated trajectory
-1. plan the path: ```python 1_plan_path.py```
-2. show volume: ```python 2_show_volume.py```
-Note: this will ideally pops up three browser windows in terminal each showing the trajectory and one structure.
+# Visual Validation of the Calculated Trajectory
+To perform visual validation, you need to:
 
-# Unit test
+1. Plan the path (if the pipeline hasn't been run): ```python 1_plan_path.py```
+2. Show volume: ```python 2_show_volume.py```
+
+This process ideally opens three browser windows in the terminal, each displaying the trajectory and one structure.
+
+# Unit Test
+To conduct a unit test for the check_intersect_batch function, which is the main function that selects the trajectory meeting the desired constraints, use the following command:
 ```python test.py```
-Note: this is the unit test for the check_intersect_batch function which is the main function that selects out the trajectory that fits with the desired constraints. all details are written as doc strings and inline comments in the script.
+Detailed descriptions of the function and its operations can be found in the docstrings and inline comments in the script.
 
-
-# Video demo of the execution
-link
-update video
-
-
-
+# Video Demo of Moving the Arm
 
 ------
 
-# Side Notes
-Notes that are associated with the process of making the repository, notes on some intermediate code; not directly assocaited with the execution of the path planning.
+# Repository Development Notes
+Below are some notes associated with the development of the repository, covering aspects such as workspace creation, package creation, and ROS topics.
 
-## Create work space
-The work space is created by ```catkin_make``` which makes:
+## Workspace Creation
+The workspace was created using the ```catkin_make``` command, which generated the following directories:
 - ```src``` and ```src/CMakeLists.txt```
 - ```devel```
 - ```build```
 
-## Making Individual Packages
-All packages should be made inside of the src folder by creating new directories using:
+## Package Creation
+All packages were created within the src folder. New directories were made using the command: 
 ```catkin_create_pkg package_name dependencies```
 
-## Ros Topics
-show list:
+## ROS Topics
+To display a list of ROS topics, use: 
 ```rostopic list```
-echo data from a topic:
+To echo data from a particular topic, use: 
 ```rostopic echo topic_name```
