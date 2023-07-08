@@ -22,14 +22,14 @@ if [ $? -ne 0 ]; then
 fi
 
 # Step 4
-gnome-terminal -- bash -c "source roscore.sh; sleep 1; bash"
+gnome-terminal -- bash -c "source roscore.sh; sleep 3; bash"
 
 # Step 5
-sleep 1
-gnome-terminal -- bash -c "roslaunch robot_moveit demo.launch; sleep 3; bash"
+sleep 3
+gnome-terminal -- bash -c "roslaunch robot_moveit demo.launch; sleep 7; bash"
 
 # Step 6
-sleep 3
+sleep 7
 gnome-terminal -- bash -c "source marker.sh; bash"
 
 # Step 7
